@@ -29,6 +29,20 @@ body {
   margin-left: 0;
 }
 
+#anzeige-jumbotron {
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#anzeigen-footer {
+  padding-left: 0px;
+}
+
+#anzeigen-infos {
+  padding-left: 10px;
+}
+
 @media (min-width: 768px) {
   #sidebar-wrapper {
     margin-left: 0;
