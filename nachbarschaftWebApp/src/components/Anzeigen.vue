@@ -41,7 +41,7 @@
         <div class="col"></div>
         <div class="col-8">
 
-          <div class="jumbotron jumbotron-fluid" id="anzeige-jumbotron">
+          <div class="jumbotron jumbotron-fluid anzeige-jumbotron">
             <div class="container-fluid">
 
               <div class="row">
@@ -65,14 +65,14 @@
 
                 </div>
                 <div class="col-4 col-sm-4">
-                  <img src="placeholder.jpg" class="img-thumbnail" alt="placeholder">
+                  <img src="../assets/placeholder.jpg" class="img-thumbnail" alt="placeholder">
                 </div>
               </div>
 
             </div>
           </div>
 
-          <div class="jumbotron jumbotron-fluid" id="anzeige-jumbotron">
+          <div class="jumbotron jumbotron-fluid anzeige-jumbotron">
             <div class="container-fluid">
 
               <div class="row">
@@ -96,7 +96,7 @@
 
                 </div>
                 <div class="col-4 col-sm-4">
-                  <img src="placeholder.jpg" class="img-thumbnail" alt="placeholder">
+                  <img src="../assets/placeholder.jpg" class="img-thumbnail" alt="placeholder">
                 </div>
               </div>
 
@@ -123,7 +123,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#anzeige-jumbotron {
+.anzeige-jumbotron {
   margin-top: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
