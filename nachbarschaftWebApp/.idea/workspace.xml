@@ -5,19 +5,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e05365c-e9ca-4b7d-b722-b7eb134856ee" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/HelloWorld.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HelloWorld.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.js" afterDir="false" />
-    </list>
+    <list default="true" id="8e05365c-e9ca-4b7d-b722-b7eb134856ee" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1czHMky9ZQAey8Xc8H4eDacxQos" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -44,6 +39,7 @@
       <option name="presentableId" value="Default" />
       <updated>1591524455632</updated>
       <workItem from="1591524457693" duration="7029000" />
+      <workItem from="1591532023331" duration="1046000" />
     </task>
     <servers />
   </component>
@@ -60,6 +56,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="304" y="64" key="SettingsEditor" timestamp="1591531516028">

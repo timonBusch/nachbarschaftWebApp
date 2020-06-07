@@ -29,7 +29,7 @@
 
         </nav>
 
-        <HelloWorld :msg="message"/>
+        <Anzeigen :msg="message"/>
 
       </div>
     </div>
@@ -38,12 +38,12 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Anzeigen from './components/Anzeigen.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Anzeigen
   },
   data(){
     return {
