@@ -7,9 +7,9 @@
       <div class="bg-light border-right" id="sidebar-wrapper">
         <div class="sidebar-heading">Menü</div>
         <div class="list-group list-group-flush">
-          <a href="index.html" class="list-group-item list-group-item-action bg-light">Startseite</a>
-          <a href="profil.html" class="list-group-item list-group-item-action bg-light">Profil</a>
-          <a href="login.html" class="list-group-item list-group-item-action bg-light">Login</a>
+          <router-link to="/" class="list-group-item list-group-item-action bg-light">Startseite</router-link>
+          <router-link to="/profil" class="list-group-item list-group-item-action bg-light">Profil</router-link>
+          <router-link to="/login" class="list-group-item list-group-item-action bg-light">Login</router-link>
 
         </div>
       </div>
@@ -29,39 +29,30 @@
 
         </nav>
 
-        <Anzeigen :msg="message"/>
+        <router-view></router-view>
 
       </div>
+
     </div>
 
   </div>
 </template>
 
 <script>
-import Anzeigen from './components/Anzeigen.vue'
-
-import axios from 'axios'
 
 export default {
   name: 'App',
-  components: {
-    Anzeigen,
-
-  },
   data(){
     return {
-      message: 'HelloWorld!',
       isActive: true,
-      info: null
+      info: null,
+
     }
   },
   methods: {
     toggleClass: function () {
       this.isActive = !this.isActive
     }
-  },
-  mounted() {
-    axios.get('https://api.coindesk.com/v1/bpi/currentprice.json').then(response => (this.info = response))
   }
 
 }
