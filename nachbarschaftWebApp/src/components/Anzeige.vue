@@ -34,7 +34,7 @@
                         </div>
                         <div class="row">
                             <div class="col pt-5">
-                                <p class="font-weight-bold">Wohnort</p>
+                                <p class="font-weight-bold">Wohnort:</p>
                                 <p>Dingshausen</p>
                             </div>
                         </div>

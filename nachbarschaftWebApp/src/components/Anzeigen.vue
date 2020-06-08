@@ -17,7 +17,7 @@
 
         </div>
         <div class="col-6"><input type="text" class="form-control" id="search"></div>
-        <div class="col-3">Sortieren</div>
+        <div class="col-3"></div>
       </div>
 
       <!-- Top Bar in all Anzeigen -->
@@ -58,7 +58,7 @@
 
                       <div class="row border-top border-light">
                         <div class="col pl-0">
-                          <span class="badge badge-success">{{ post.datum }}</span>
+                          <span class="badge badge-success">{{ convert(post.datum) }}</span>
                           <span class="badge badge-info ml-3">Thema: {{post.thema}}</span>
                         </div>
                       </div>
@@ -95,7 +95,7 @@
 <script>
 
 import axios from "axios";
-import moment from 'vue-moment'
+
 
 export default {
   name: 'Anzeigen',
@@ -104,12 +104,12 @@ export default {
     errors: []
   },
   methods: {
-    datumX: function (value) {
-      return moment(String(value)).format('MM/DD/YYYY')
+    convert: function (value) {
+      return  new Date(value).toLocaleString();
+
     }
 
   },
-
   mounted () {
     axios.get('http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/all').then(response => {
       this.posts = response.data
