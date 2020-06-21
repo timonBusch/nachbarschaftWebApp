@@ -21,6 +21,13 @@
           <button class="btn btn-primary"  @click.prevent="toggleClass">Menü</button>
           <div class="container-fluid">
             <h1 >Nachbarschaftshilfe</h1>
+            <div v-if="currentUser.benutzername">
+              <h3> {{ currentUser.benutzername }}  </h3>
+            </div>
+            <div v-else>
+              Nicht eingeloggt
+            </div>
+
           </div>
 
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,23 +46,27 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+  export default {
+    name: 'App',
+    data(){
+      return {
+        isActive: true,
+        info: null,
 
-export default {
-  name: 'App',
-  data(){
-    return {
-      isActive: true,
-      info: null,
+      }
+    },
+    methods: {
+      toggleClass: function () {
+        this.isActive = !this.isActive
+      },
+      logoutUser() {
+        this.$store.dispatch("logoutUser");
+      }
+    },
+    computed: mapState('login',['currentUser']),
 
-    }
-  },
-  methods: {
-    toggleClass: function () {
-      this.isActive = !this.isActive
-    }
   }
-
-}
 </script>
 
 <style>

@@ -14,19 +14,25 @@
                     <form>
                         <div class="form-group">
                             <label for="emailInput">Email address</label>
-                            <input required v-model="email" type="email" class="form-control" id="emailInput" aria-describedby="emailHelp">
+                            <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" v-model="loginInfo.email">
                         </div>
                         <div class="form-group">
                             <label for="inputPassword">Password</label>
-                            <input required v-model="password" type="password" class="form-control" id="inputPassword">
+                            <input type="password" class="form-control" id="inputPassword" v-model="loginInfo.password">
                         </div>
                         <div class="form-group form-check">
                             <input type="checkbox" class="form-check-input" id="stayLogged">
                             <label class="form-check-label" for="stayLogged">Angemeldet bleiben</label>
                         </div>
                         <p>Noch kein Konto? <router-link to="/register">Registrieren</router-link></p>
-                        <button type="submit" class="btn btn-primary">Login</button>
+                        <button @click="loginUser" class="btn btn-primary">Login</button>
                     </form>
+                    <h3>Users</h3>
+                    <div v-for="user in allUsers" :key="user.id">
+
+                        {{  user.benutzername }}
+
+                    </div>
                 </div>
 
             </div>
@@ -37,23 +43,36 @@
 
 
 <script>
-
+    import  { mapGetters } from "vuex";
     export default {
         name: "Login",
         data() {
-            return {
-                email: "",
-                password: ""
-            }
+          return {
+              // Accept user Infos
+              loginInfo: {
+                  email: '',
+                  password: ''
+              }
+          }
         },
         methods: {
-            login: function () {
-                let email = this.email
-                let password = this.password
-                this.$store.dispatch('login', {email, password})
-                .then(() => this.$router.push('/'))
-                .catch(err => console.log(err))
+            //...mapActions('login',["fetchUsers"]),
+            // Call loginUser in login Script
+            // TODO: Wird nicht aufgefuren ?
+            async loginUser() {
+                let user = await this.$store.dispatch('login/loginUser', this.loginInfo)
+                if(user.error) {
+                    alert(user.error)
+                }else {
+                    alert("Thank you for signing in" + user.benutzername)
+                }
             }
+        },
+        computed: mapGetters('login',['allUsers']),
+        created() {
+            //this.fetchUsers()
+            // Call fetchUsers mutation in login Script
+            this.$store.dispatch("login/fetchUsers")
         }
     }
 </script>
