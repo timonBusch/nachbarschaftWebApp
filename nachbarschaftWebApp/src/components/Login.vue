@@ -14,25 +14,21 @@
                     <form>
                         <div class="form-group">
                             <label for="emailInput">Email address</label>
-                            <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" v-model="loginInfo.email">
+                            <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" v-model="username">
                         </div>
                         <div class="form-group">
                             <label for="inputPassword">Password</label>
-                            <input type="password" class="form-control" id="inputPassword" v-model="loginInfo.password">
+                            <input type="password" class="form-control" id="inputPassword" v-model="password">
                         </div>
                         <div class="form-group form-check">
                             <input type="checkbox" class="form-check-input" id="stayLogged">
                             <label class="form-check-label" for="stayLogged">Angemeldet bleiben</label>
                         </div>
                         <p>Noch kein Konto? <router-link to="/register">Registrieren</router-link></p>
-                        <button @click="loginUser" class="btn btn-primary">Login</button>
+                        <button @click.prevent="loginUser()" class="btn btn-primary">Login</button>
                     </form>
-                    <h3>Users</h3>
-                    <div v-for="user in allUsers" :key="user.id">
+                    <p v-if="msg">{{ msg }}</p>
 
-                        {{  user.benutzername }}
-
-                    </div>
                 </div>
 
             </div>
@@ -43,37 +39,50 @@
 
 
 <script>
-    import  { mapGetters } from "vuex";
+    import {mapActions} from "vuex";
+    import AuthService from "../services/AuthService";
+    import axios from "axios";
+
+
     export default {
         name: "Login",
         data() {
           return {
               // Accept user Infos
-              loginInfo: {
-                  email: '',
-                  password: ''
-              }
+              username: '',
+              password: '',
+              msg: ''
           }
         },
         methods: {
-            //...mapActions('login',["fetchUsers"]),
-            // Call loginUser in login Script
-            // TODO: Wird nicht aufgefuren ?
+            ...mapActions('login',["login", "userLogin"]),
             async loginUser() {
-                let user = await this.$store.dispatch('login/loginUser', this.loginInfo)
-                if(user.error) {
-                    alert(user.error)
-                }else {
-                    alert("Thank you for signing in" + user.benutzername)
+                try {
+                    const credentials = {
+                        username: this.username,
+                        password: this.password
+                    };
+                    const response = await AuthService.login(credentials);
+                    this.msg = response.msg;
+
+                    const token = response.jwt;
+                    //const user = response.user;
+
+                    this.login(token);
+
+                    const user = await axios.get( 'http://http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/benutzer/benutzername?benutzername='
+                        + credentials.username)
+                        .then(response => response.data);
+
+                    this.userLogin(user);
+
+                    await this.$router.push('/')
+                }catch (error) {
+                    this.msg = error.response.data.msg
                 }
+                console.log()
             }
         },
-        computed: mapGetters('login',['allUsers']),
-        created() {
-            //this.fetchUsers()
-            // Call fetchUsers mutation in login Script
-            this.$store.dispatch("login/fetchUsers")
-        }
     }
 </script>
 

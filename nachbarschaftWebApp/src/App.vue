@@ -21,11 +21,14 @@
           <button class="btn btn-primary"  @click.prevent="toggleClass">Menü</button>
           <div class="container-fluid">
             <h1 >Nachbarschaftshilfe</h1>
-            <div v-if="currentUser.benutzername">
-              <h3> {{ currentUser.benutzername }}  </h3>
+
+            <div v-if="user.benutzername">
+              <span class="mr-2">Wilkommen {{ user.benutzername }}</span>
+              <button class="btn btn-primary" @click="this.logout">Logout</button>
             </div>
+
             <div v-else>
-              Nicht eingeloggt
+              <button class="btn btn-primary" @click="$router.push('login')">Login</button>
             </div>
 
           </div>
@@ -46,7 +49,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
   export default {
     name: 'App',
     data(){
@@ -57,14 +60,12 @@
       }
     },
     methods: {
+      ...mapActions('login',["logout"]),
       toggleClass: function () {
         this.isActive = !this.isActive
       },
-      logoutUser() {
-        this.$store.dispatch("logoutUser");
-      }
     },
-    computed: mapState('login',['currentUser']),
+    computed: mapState('login',['user']),
 
   }
 </script>

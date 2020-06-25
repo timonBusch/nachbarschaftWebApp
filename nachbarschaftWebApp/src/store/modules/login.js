@@ -1,62 +1,57 @@
-import axios from 'axios';
+
+import Axios from "axios";
+import store from "../index";
+
 
 // Saves the current state
 const state = {
-    users: [],
-    currentUser: {}
+    token: '',
+    user: []
 };
 
 // Getter to return state variables
 const getters = {
-    allUsers: state => state.users
+    isLoggedIn: state => {
+        return state.token
+    },
+    getUser: state => {
+        return state.user;
+    }
 };
 
 // Actions that call mutation functions
 const actions = {
+    login: ({commit}, token) => {
+        commit('SET_TOKEN', token);
 
-    // Get all Users from API
-    async fetchUsers({ commit }) {
-        const response = await axios.get('http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/benutzer/all');
-        commit('setUsers',response.data)
-
-        // Load user from the localStorage and set it as current user
-        let user = JSON.parse(window.localStorage.currentUser);
-        commit('setCurrentUser',user)
+        // Authentifizierungs heade rsetzten
+        //Axios.defaults.headers.common['Authorization']= `Bearer ${store.state.token}`;
     },
-    // Call mutation to set current user to empty
-    logoutUser({commit}) {
-        commit('setEmptyUser')
-    },
-    //
-async loginUser({commit}, loginInfo) {
-    try {
-        const user = await axios.get("http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/benutzer/email?email=" + loginInfo.email);
+    userLogin: ({commit}, user) => {
+        commit('SET_USER', user);
 
-        commit('setCurrentUser', user);
-        return user;
-    }catch {
-        return {error: "Email was incorrect or not found, Please try again"}
+        // Authentifizierungs heade rsetzten
+        Axios.defaults.headers.common['Authorization']= `Bearer ${store.state.token}`;
+    },
+    logout: ({ commit }) => {
+            commit('RESET', '')
     }
-
-}
 };
 
 // Changes state in vuex storage
 const mutations = {
-    // Save all users in state
-    setUsers: (state, users) => (state.users = users),
-
-    // Set current user in state to empty
-    setEmptyUser: (state) => {
-        state.currentUser = {}
-        window.localStorage.currentUser = JSON.stringify({});
-        },
-
-    // Set current user in state
-    setCurrentUser: (state, user) => {
-        state.currentUser = user;
-        window.localStorage.currentUser = JSON.stringify(user);
+    SET_TOKEN: (state, token) => {
+        state.token = token;
     },
+    SET_USER: (state, user) => {
+        state.user = user;
+    },
+    RESET: (state) => {
+        state.token = '';
+        state.user = [];
+    }
+
+
 };
 
 export default {

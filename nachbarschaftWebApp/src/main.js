@@ -11,6 +11,7 @@ import Login from "./components/Login";
 import store from "./store"
 import Registrieren from "./components/Registrieren";
 import Anzeige from "./components/Anzeige";
+//import Axios from "axios";
 
 
 Vue.use(VueRouter)
@@ -29,6 +30,8 @@ const router = new VueRouter({
   ],
   mode: 'history'
 })
+
+//Axios.defaults.headers.common['Authorization'] = `Bearer ${store.state.token}`;
 
 
 new Vue({
