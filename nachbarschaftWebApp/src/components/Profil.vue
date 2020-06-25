@@ -11,6 +11,7 @@
                 </div>
                 <div class="col">
                     <p>Bewertung:</p>
+
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
@@ -23,7 +24,7 @@
                         <div class="row">
                             <div class="col">
 
-                                <label for="usr">Benutzername:</label>
+                                <label for="userName">Benutzername:</label>
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" :value="user.benutzername" id="userName"
                                            :disabled="!this.validated">
@@ -99,31 +100,22 @@
 </template>
 
 <script>
-    import axios from "axios";
 
+    import { mapState } from 'vuex'
     export default {
         name: "Profil",
-        props: {
-            user: null,
-        },
         data: function() {
             return {
                 validated: false
             }
         },
-        mounted() {
-            axios.get('http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/benutzer/id?id=1').then(response => {
-                this.user = response.data
-            })
-                .catch(e => {
-                    this.errors.push(e)
-                })
-        },
+
         methods: {
             enableInput: function () {
                 this.validated = !this.validated;
             }
-        }
+        },
+        computed: mapState('login',['user']),
 
     }
 </script>

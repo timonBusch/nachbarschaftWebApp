@@ -26,7 +26,12 @@ const router = new VueRouter({
     { path: '/profil', component: Profil},
     { path: '/login', component: Login},
     { path: '/register', component: Registrieren},
-    { path: '/anzeige', component: Anzeige}
+    {
+      path: '/anzeige/:id',
+      name: 'anzeige',
+      props: true,
+      component: Anzeige
+    }
   ],
   mode: 'history'
 })

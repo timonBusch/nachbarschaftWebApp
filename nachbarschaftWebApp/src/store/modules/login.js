@@ -1,7 +1,4 @@
 
-import Axios from "axios";
-import store from "../index";
-
 
 // Saves the current state
 const state = {
@@ -31,7 +28,7 @@ const actions = {
         commit('SET_USER', user);
 
         // Authentifizierungs heade rsetzten
-        Axios.defaults.headers.common['Authorization']= `Bearer ${store.state.token}`;
+        //Axios.defaults.headers.common['Authorization']= `Bearer ${store.state.token}`;
     },
     logout: ({ commit }) => {
             commit('RESET', '')

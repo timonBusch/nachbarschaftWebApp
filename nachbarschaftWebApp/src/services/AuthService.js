@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const url = 'http://localhost:8080/';
+const url = 'http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/';
+//const url = "http://localhost:8080/";
 
 export default {
     login(credentials) {
@@ -16,9 +17,4 @@ export default {
     getSecretContent(username) {
         return axios.get(url + 'benutzer/benutzername?=' + username).then(response => response.data);
     },
-    getUser() {
-        return axios.get(url + 'benutzer/benutzername?benutzername=Denninator', {
-            Authorization: "Bearer " + this.$store.state.login.token
-        }).then(response => response.data);
-    }
 }

@@ -26,10 +26,10 @@
         <div class="col-6">
 
           <div class="btn-group btn-group-lg btn-block">
-            <button type="button" class="btn btn-primary">Eigene</button>
-            <button type="button" class="btn btn-primary">Favoriten</button>
+            <button @click="this.filterAnzeigenEigene" type="button" class="btn btn-primary">Eigene</button>
+            <button @click="filterAnzeigenFavoriten" type="button" class="btn btn-primary">Favoriten</button>
             <button type="button" class="btn btn-primary">Karte</button>
-            <button type="button" class="btn btn-primary">Alle</button>
+            <button @click="this.fetchAnzeigen" type="button" class="btn btn-primary">Alle</button>
           </div>
 
         </div>
@@ -37,9 +37,9 @@
       </div>
 
       <!-- Anzeigen -->
-      <div v-if="posts && posts.length">
+      <div v-if="allAnzeigen && allAnzeigen.length">
 
-        <div class="row" v-for="post of posts" :key="post.id">
+        <div class="row" v-for="post of allAnzeigen" :key="post.id">
           <div class="col"></div>
           <div class="col-8">
 
@@ -49,7 +49,7 @@
                 <div class="row">
                   <div class="col-8 col-sm-8" >
 
-                    <h5><router-link to="/anzeige" >{{post.titel}}</router-link></h5>
+                    <h5><a href="" @click="pushToAnzeige(post.id.toString())">{{post.titel}}</a></h5>
                     <p>
                       {{post.beschreibung}}
                     </p>
@@ -94,30 +94,30 @@
 
 <script>
 
-import axios from "axios";
 
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: 'Anzeigen',
   props: {
-    posts: [],
     errors: []
   },
   methods: {
     convert: function (value) {
       return  new Date(value).toLocaleString();
+    },
+    ...mapActions("anzeigen",["fetchAnzeigen", "filterAnzeigenEigene"
+      , "filterAnzeigenFavoriten"]),
 
-    }
+    pushToAnzeige: function (id) {
+      console.log(id);
+      this.$router.push({name: 'anzeige', params: {id}});
+    },
 
   },
-  mounted () {
-    axios.get('http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/all').then(response => {
-      this.posts = response.data
-    })
-            .catch(e => {
-      this.errors.push(e)
-    })
-
+  computed: mapGetters("anzeigen",["allAnzeigen"]),
+  created() {
+    this.fetchAnzeigen();
   }
 }
 </script>

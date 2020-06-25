@@ -66,11 +66,10 @@
                     this.msg = response.msg;
 
                     const token = response.jwt;
-                    //const user = response.user;
 
                     this.login(token);
 
-                    const user = await axios.get( 'http://http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/benutzer/benutzername?benutzername='
+                    const user = await axios.get( 'http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/benutzer/email?email='
                         + credentials.username)
                         .then(response => response.data);
 
@@ -80,7 +79,7 @@
                 }catch (error) {
                     this.msg = error.response.data.msg
                 }
-                console.log()
+
             }
         },
     }

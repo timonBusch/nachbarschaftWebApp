@@ -8,8 +8,11 @@
         <div class="sidebar-heading">Menü</div>
         <div class="list-group list-group-flush">
           <router-link to="/" class="list-group-item list-group-item-action bg-light">Startseite</router-link>
-          <router-link to="/profil" class="list-group-item list-group-item-action bg-light">Profil</router-link>
-          <router-link to="/login" class="list-group-item list-group-item-action bg-light">Login</router-link>
+          <div v-if="this.isLoggedIn">
+            <router-link to="/profil" class="list-group-item list-group-item-action bg-light">Profil</router-link>
+          </div>
+
+
 
         </div>
       </div>
@@ -49,7 +52,7 @@
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex'
+  import { mapState, mapActions, mapGetters } from 'vuex'
   export default {
     name: 'App',
     data(){
@@ -65,7 +68,10 @@
         this.isActive = !this.isActive
       },
     },
-    computed: mapState('login',['user']),
+    computed: {
+      ...mapState('login',['user']),
+      ...mapGetters('login',['isLoggedIn'])
+    }
 
   }
 </script>
