@@ -6,8 +6,6 @@
             <div class="card">
                 <div class="card-header">
                     <h1 class="card-title">Login</h1>
-                    <div class="container-fluid">
-                    </div>
                 </div>
 
                 <div class="card-body">
@@ -75,7 +73,7 @@
 
                     this.userLogin(user);
 
-                    await this.$router.push('/')
+                    this.$router.push('/')
                 }catch (error) {
                     this.msg = error.response.data.msg
                 }

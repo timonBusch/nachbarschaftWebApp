@@ -27,7 +27,12 @@ const actions = {
 
         commit('SET_ANZEIGEN', response.data);
     },
-
+    async addAnzeige({rootState},anzeigeInfo) {
+        const userId = rootState.login.user.id;
+        const response = await Axios.post('http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/add?titel=' + anzeigeInfo.titel +
+            '&thema='+ anzeigeInfo.thema + '&ben_id=' + userId + '&beschreibung=' + anzeigeInfo.beschreibung)
+        return  response.data
+    },
     /**
      * Setzen nur die Anzeigen die vom Benutzer erstellt wurden in den Zustand Anzeigen
      * @param commit
@@ -57,13 +62,12 @@ const actions = {
         commit('CLEAR_FAVORITEN');
        for (const fav of responseFav.data) {
            const responseR = await Axios.get(`http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/id?id=${fav.anz_id}`)
-           console.log(responseR.data);
+
            commit('COLLECT_FAVORITEN', responseR.data);
        }
 
         commit('SET_FAVORITEN');
     },
-
     async filterAnzeigenById ({commit}, id) {
 
         const response = await Axios.get(`http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/id?id=${id}`)

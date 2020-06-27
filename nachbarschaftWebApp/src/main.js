@@ -11,6 +11,7 @@ import Login from "./components/Login";
 import store from "./store"
 import Registrieren from "./components/Registrieren";
 import Anzeige from "./components/Anzeige";
+import AddAnzeige from "./components/AddAnzeige";
 //import Axios from "axios";
 
 
@@ -23,15 +24,25 @@ Vue.config.productionTip = false
 const router = new VueRouter({
   routes: [
     { path: '/', component: Anzeigen},
-    { path: '/profil', component: Profil},
-    { path: '/login', component: Login},
+    {
+      path: '/profil/:id?',
+      name: 'profil',
+      component: Profil,
+      props: true,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
     { path: '/register', component: Registrieren},
     {
       path: '/anzeige/:id',
       name: 'anzeige',
       props: true,
       component: Anzeige
-    }
+    },
+    {path: '/add_anzeige', name: 'add', component: AddAnzeige}
   ],
   mode: 'history'
 })

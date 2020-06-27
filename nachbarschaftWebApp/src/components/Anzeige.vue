@@ -3,8 +3,13 @@
         <div class="jumbotron jumbotron-fluid">
             <div class="container-fluid ">
                 <div class="row mb-2 mx-2">
+                    <div class="col pb-2">
+                        <h3> {{ this.getCurrentAnzeige.titel }} </h3>
+                    </div>
+                </div>
+                <div class="row mb-2 mx-2">
                     <div class="col-2">
-                        <button type="button" class="btn btn-primary">Vollständiges Profil</button>
+                        <button @click="pushToAnzeige(getCurrentAnzeige.ben_id)" type="button" class="btn btn-primary">Vollständiges Profil</button>
                     </div>
                     <div class="col-10">
                         <h3 class="float-left"><span class="font-weight-bold">Thema:</span> {{this.getCurrentAnzeige.thema}} </h3>
@@ -18,7 +23,7 @@
                         <div class="row">
                             <div class="col">
                                <span class="font-weight-bold">Benutzername:</span>
-                                <p>Tierverband Dingshausen</p>
+                                <p>{{ this.getUser.benutzername }}</p>
                                 <span class="fa fa-star checked"></span>
                                 <span class="fa fa-star checked"></span>
                                 <span class="fa fa-star checked"></span>
@@ -29,13 +34,13 @@
                         <div class="row">
                             <div class="col pt-5">
                                 <p class="font-weight-bold">PLZ:</p>
-                                <p>32573</p>
+                                <p>{{ this.getUser.plz }}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col pt-5">
                                 <p class="font-weight-bold">Wohnort:</p>
-                                <p>Dingshausen</p>
+                                <p class="text-capitalize">{{ this.getUser.wohnort }}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -57,18 +62,31 @@
 </template>
 
 <script>
-    // TODO: Titel und Benutzer Informationen hinzufuegen (neue store Klasse) !!
     import {mapActions, mapGetters} from "vuex";
     export default {
         name: "Anzeige",
         props: ['id'],
         methods: {
-            ...mapActions("anzeigen", ["filterAnzeigenById"])
+            ...mapActions("anzeigen", ["filterAnzeigenById"]),
+            ...mapActions("benutzer", ["fetchUserInformationById"]),
+            async fetchAnzeigenInformation() {
+                await this.filterAnzeigenById(this.id);
+                await this.fetchUserInformationById(this.getCurrentAnzeige.ben_id);
+            },
+            pushToAnzeige: function (id) {
+                this.$router.push({name: 'profil', params: {id}});
+            },
         },
-        computed: mapGetters("anzeigen",["getCurrentAnzeige"]),
+        computed: {
+            ...mapGetters("anzeigen",["getCurrentAnzeige"]),
+            ...mapGetters("benutzer", ["getUser"])
+        },
+
         created() {
-            this.filterAnzeigenById(this.id);
-        }
+            this.fetchAnzeigenInformation();
+
+        },
+
     }
 </script>
 

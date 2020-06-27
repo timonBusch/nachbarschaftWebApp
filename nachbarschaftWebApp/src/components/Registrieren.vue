@@ -13,7 +13,7 @@
                     <form>
                         <div class="form-group">
                             <label for="inputUserName">Benutzername</label>
-                            <input required v-model="password" type="text" class="form-control" id="inputUserName">
+                            <input required v-model="username" type="text" class="form-control" id="inputUserName">
                         </div>
                         <div class="form-group">
                             <label for="emailInput">Email Adresse</label>
@@ -25,7 +25,11 @@
                         </div>
                         <div class="form-group">
                             <label for="inputPassword">Passwort bestätigen</label>
-                            <input required v-model="password" type="password" class="form-control" id="inputConfirmPassword">
+                            <input required v-model="passwordConf" type="password" class="form-control" id="inputConfirmPassword">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPLZ">Postleitzahl</label>
+                            <input required v-model="plz" type="text" class="form-control" id="inputPLZ">
                         </div>
                         <div class="form-check pb-3">
                             <label class="form-check-label">
@@ -33,7 +37,7 @@
                                 <a href="#">Datenschutzbestimmungen</a> und <a href="#">Nutzerbedingungen</a>
                             </label>
                         </div>
-                        <button type="submit" class="btn btn-primary">Registrieren</button>
+                        <button type="button" @click="signUp" class="btn btn-primary">Registrieren</button>
                     </form>
                 </div>
 
@@ -44,8 +48,39 @@
 </template>
 
 <script>
+    import AuthService from "../services/AuthService";
     export default {
-        name: "Registrieren"
+        name: "Registrieren",
+        data() {
+            return {
+                // Accept information to register
+                username: '',
+                password: '',
+                email: '',
+                plz: '',
+                passwordConf: '',
+                msg: '',
+            }
+        },
+        methods: {
+            async signUp() {
+                try {
+                    const credentials = {
+                        username: this.username,
+                        password: this.password,
+                        email: this.email,
+                        plz: this.plz
+                    };
+                    const response = await AuthService.signUp(credentials)
+
+                    this.msg = response.data;
+
+                    this.$router.push('/')
+                }catch (error) {
+                    this.msg = error.response.data;
+                }
+            }
+        }
     }
 </script>
 

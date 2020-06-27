@@ -16,7 +16,14 @@
           </div>
 
         </div>
-        <div class="col-6"><input type="text" class="form-control" id="search"></div>
+        <div class="col-6">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Suche...">
+            <div class="input-group-append">
+              <button class="btn btn-success" >Go</button>
+            </div>
+          </div>
+        </div>
         <div class="col-3"></div>
       </div>
 
@@ -26,9 +33,9 @@
         <div class="col-6">
 
           <div class="btn-group btn-group-lg btn-block">
-            <button @click="this.filterAnzeigenEigene" type="button" class="btn btn-primary">Eigene</button>
-            <button @click="filterAnzeigenFavoriten" type="button" class="btn btn-primary">Favoriten</button>
-            <button type="button" class="btn btn-primary">Karte</button>
+            <button v-if="this.isLoggedIn" @click="this.filterAnzeigenEigene" type="button" class="btn btn-primary">Eigene</button>
+            <button v-if="this.isLoggedIn" @click="this.filterAnzeigenFavoriten" type="button" class="btn btn-primary">Favoriten</button>
+            <button v-if="this.isLoggedIn" type="button" class="btn btn-primary">Karte</button>
             <button @click="this.fetchAnzeigen" type="button" class="btn btn-primary">Alle</button>
           </div>
 
@@ -48,8 +55,7 @@
 
                 <div class="row">
                   <div class="col-8 col-sm-8" >
-
-                    <h5><a href="" @click="pushToAnzeige(post.id.toString())">{{post.titel}}</a></h5>
+                    <h5><router-link :to="{ name: 'anzeige', params: {id: post.id.toString()}}">{{post.titel}}</router-link></h5>
                     <p>
                       {{post.beschreibung}}
                     </p>
@@ -60,6 +66,8 @@
                         <div class="col pl-0">
                           <span class="badge badge-success">{{ convert(post.datum) }}</span>
                           <span class="badge badge-info ml-3">Thema: {{post.thema}}</span>
+                          <span v-if="post.ben_id === getUser.id" class="fa fa-user ml-3"></span>
+
                         </div>
                       </div>
 
@@ -109,13 +117,11 @@ export default {
     ...mapActions("anzeigen",["fetchAnzeigen", "filterAnzeigenEigene"
       , "filterAnzeigenFavoriten"]),
 
-    pushToAnzeige: function (id) {
-      console.log(id);
-      this.$router.push({name: 'anzeige', params: {id}});
-    },
-
   },
-  computed: mapGetters("anzeigen",["allAnzeigen"]),
+  computed: {
+    ...mapGetters("anzeigen",["allAnzeigen"]),
+    ...mapGetters("login", ['getUser', 'isLoggedIn'])
+  },
   created() {
     this.fetchAnzeigen();
   }

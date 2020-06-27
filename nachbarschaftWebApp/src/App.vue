@@ -9,7 +9,9 @@
         <div class="list-group list-group-flush">
           <router-link to="/" class="list-group-item list-group-item-action bg-light">Startseite</router-link>
           <div v-if="this.isLoggedIn">
-            <router-link to="/profil" class="list-group-item list-group-item-action bg-light">Profil</router-link>
+
+            <router-link :to="{ name: 'profil'}" class="list-group-item list-group-item-action bg-light">Profil</router-link>
+            <router-link :to="{name: 'add'}" class="list-group-item list-group-item-action bg-light">Neue Anzeige</router-link>
           </div>
 
 
@@ -26,12 +28,12 @@
             <h1 >Nachbarschaftshilfe</h1>
 
             <div v-if="user.benutzername">
-              <span class="mr-2">Wilkommen {{ user.benutzername }}</span>
-              <button class="btn btn-primary" @click="this.logout">Logout</button>
+              <span class="mr-2">Willkommen {{ user.benutzername }}</span>
+              <button class="btn btn-primary" @click="logoutUser">Logout</button>
             </div>
 
             <div v-else>
-              <button class="btn btn-primary" @click="$router.push('login')">Login</button>
+              <button class="btn btn-primary" @click="$router.push({name: 'login'})">Login</button>
             </div>
 
           </div>
@@ -42,7 +44,10 @@
 
         </nav>
 
-        <router-view></router-view>
+        <keep-alive include="add_anzeige">
+          <router-view></router-view>
+        </keep-alive>
+
 
       </div>
 
@@ -66,6 +71,10 @@
       ...mapActions('login',["logout"]),
       toggleClass: function () {
         this.isActive = !this.isActive
+      },
+      logoutUser() {
+        this.logout();
+        this.$router.push('/')
       },
     },
     computed: {
