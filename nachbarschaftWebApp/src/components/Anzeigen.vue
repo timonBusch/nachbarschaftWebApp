@@ -18,9 +18,9 @@
         </div>
         <div class="col-6">
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Suche...">
+            <input v-model="wordToSearch" type="text" class="form-control" placeholder="Suche...">
             <div class="input-group-append">
-              <button class="btn btn-success" >Go</button>
+              <button @click="filterBySearchWord" class="btn btn-success" >Los</button>
             </div>
           </div>
         </div>
@@ -67,6 +67,9 @@
                           <span class="badge badge-success">{{ convert(post.datum) }}</span>
                           <span class="badge badge-info ml-3">Thema: {{post.thema}}</span>
                           <span v-if="post.ben_id === getUser.id" class="fa fa-user ml-3"></span>
+                          <button v-if="filterFavByAnzIdAndBenId(post.id).length !== 0" type="button" class="btn btn-primary btn-sm">
+                            <i class="fa fa-heart"></i>
+                          </button>
 
                         </div>
                       </div>
@@ -91,31 +94,52 @@
 
     </div>
 
-    <ul v-if="errors && errors.length">
-      <li v-for="error of errors" :key="error.message">
-        {{error.message}}
-      </li>
-    </ul>
+
 
   </div>
 </template>
 
 <script>
-
-
-import {mapActions, mapGetters} from "vuex";
-
+  import {mapActions, mapGetters} from "vuex";
+  import AnzService from "../services/AnzeigenService";
+  // TODO: Markierung für Favorit (in Anzeige versuchen)
+  // TODO: Typ/Art Filterung (Firma, Privat)
 export default {
   name: 'Anzeigen',
   props: {
     errors: []
+  },
+  data() {
+    return {
+      msg: '',
+      wordToSearch: '',
+    }
   },
   methods: {
     convert: function (value) {
       return  new Date(value).toLocaleString();
     },
     ...mapActions("anzeigen",["fetchAnzeigen", "filterAnzeigenEigene"
-      , "filterAnzeigenFavoriten"]),
+      , "filterAnzeigenFavoriten", "filterFavoritenByAnzId", "filterAnzeigenByWord"]),
+    async filterFavByAnzIdAndBenId(anz_id) {
+      try {
+        const response = await AnzService.filterFavoritenByAnzIdAndBenId(anz_id, this.getUser.id);
+        this.msg = response.data;
+
+        return response.data
+      }catch (error) {
+        error.response
+      }
+
+    },
+    async filterBySearchWord() {
+      try {
+        this.msg = await this.filterAnzeigenByWord(this.wordToSearch);
+      }catch (error) {
+        error.response.data
+      }
+
+    }
 
   },
   computed: {

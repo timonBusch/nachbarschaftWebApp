@@ -13,8 +13,14 @@
                     </div>
                     <div class="col-10">
                         <h3 class="float-left"><span class="font-weight-bold">Thema:</span> {{this.getCurrentAnzeige.thema}} </h3>
-                        <a class="float-right" href="#"><i class="fa fa-heart"></i> </a>
-                        <a class="float-right pr-3" href="#"><i class="fa fa-exclamation"></i> </a>
+                        <button @click="removeAnzeige(getCurrentAnzeige.id)" v-if="this.getCurrentAnzeige.ben_id === this.user.id" type="button" class="btn btn-primary btn-sm float-right">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <button v-if="this.isLoggedIn" @click="addFavoritToData" type="button" class="btn btn-primary btn-sm float-right mr-3">
+                            <i class="fa fa-heart"></i>
+                        </button>
+
+                        <a v-if="this.isLoggedIn" class="float-right pr-3" href="#"><i class="fa fa-exclamation"></i> </a>
                     </div>
                 </div>
 
@@ -62,12 +68,23 @@
 </template>
 
 <script>
-    import {mapActions, mapGetters} from "vuex";
+    // TODO: Bewertungen auswerten und Sterne anpassen
+    // TODO: Chat
+    // TODO: Eigene Anzeige bearbeiten koennen ?
+    // TODO: Favoriten entfernen
+    import {mapActions, mapGetters, mapState} from "vuex";
+    import AnzService from "../services/AnzeigenService";
+
     export default {
         name: "Anzeige",
         props: ['id'],
+        data() {
+            return {
+                msg: '',
+            }
+        },
         methods: {
-            ...mapActions("anzeigen", ["filterAnzeigenById"]),
+            ...mapActions("anzeigen", ["filterAnzeigenById", "addFavorit"]),
             ...mapActions("benutzer", ["fetchUserInformationById"]),
             async fetchAnzeigenInformation() {
                 await this.filterAnzeigenById(this.id);
@@ -76,10 +93,30 @@
             pushToAnzeige: function (id) {
                 this.$router.push({name: 'profil', params: {id}});
             },
+            async addFavoritToData() {
+                try {
+                    this.msg = await this.addFavorit(this.getCurrentAnzeige.id);
+
+                }catch (error) {
+                    error.response.msg;
+                }
+
+            },
+            async removeAnzeige(id) {
+                try {
+                    this.msg = await AnzService.deleteAnzeige(id)
+                    this.$router.push("/");
+                }catch (error) {
+                    error.response.data
+
+                }
+            }
         },
         computed: {
             ...mapGetters("anzeigen",["getCurrentAnzeige"]),
-            ...mapGetters("benutzer", ["getUser"])
+            ...mapGetters("benutzer", ["getUser"]),
+            ...mapGetters("login", ["isLoggedIn"]),
+            ...mapState('login', ['user'])
         },
 
         created() {

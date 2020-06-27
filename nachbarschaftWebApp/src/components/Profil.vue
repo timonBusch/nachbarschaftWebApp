@@ -140,28 +140,31 @@
             </div>
 
         </div>
-        <div v-if="!isLoggedInUserProfile" class="row mt-3">
-            <div class="col-6 mx-auto mb-4">
-                <div class="container-fluid">
-                    <div class="input-group">
-                        <input required v-model="kommentar" type="text" class="form-control" placeholder="Nachricht...">
-                        <div class="input-group-append">
-                            <button @click="addBewertungToProfile" type="button" class="btn btn-primary">Senden</button>
-                            <select required v-model="sterne" class="custom-select">
-                                <option selected>Bewertung...</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="4">5</option>
-                            </select>
+        <div v-if="this.isLoggedIn()">
+            <div v-if="!isLoggedInUserProfile" class="row mt-3">
+                <div class="col-6 mx-auto mb-4">
+                    <div class="container-fluid">
+                        <div class="input-group">
+                            <input required v-model="kommentar" type="text" class="form-control" placeholder="Nachricht...">
+                            <div class="input-group-append">
+                                <button @click="addBewertungToProfile" type="button" class="btn btn-primary">Senden</button>
+                                <select required v-model="sterne" class="custom-select">
+                                    <option selected>Bewertung...</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="4">5</option>
+                                </select>
+                            </div>
                         </div>
+
                     </div>
 
                 </div>
-
             </div>
         </div>
+
 
 
     </div>
@@ -169,6 +172,7 @@
 
 <script>
     // TODO: Wenn man von einem Fremden Profil auf das eigene geht wird es nicht neu geladen
+    // TODO: Eingenes Profil bearbeiten koennen
     import { mapState, mapGetters, mapActions } from 'vuex'
     import Axios from "axios";
 
@@ -191,6 +195,7 @@
             },
             ...mapActions('benutzer', ['fetchBewertungenByUserId', 'fetchUserInformationById']),
             ...mapGetters('benutzer', ['getBewertungen', 'getUser']),
+            ...mapGetters('login', ['isLoggedIn']),
             convert: function (value) {
                 return  new Date(value).toLocaleString();
             },

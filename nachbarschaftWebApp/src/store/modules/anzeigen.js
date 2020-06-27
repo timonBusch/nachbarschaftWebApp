@@ -57,7 +57,6 @@ const actions = {
         const userId = rootState.login.user.id;
 
         const responseFav = await Axios.get(`http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/favorit/ben_id?ben_id=${userId}`);
-        console.log(responseFav.data);
 
         commit('CLEAR_FAVORITEN');
        for (const fav of responseFav.data) {
@@ -68,12 +67,33 @@ const actions = {
 
         commit('SET_FAVORITEN');
     },
+
+    /**
+     * Setze eine Anzeige mit einer bestimmten Id als current_anzeige
+     * @param commit
+     * @param id
+     * @returns {Promise<void>}
+     */
     async filterAnzeigenById ({commit}, id) {
 
         const response = await Axios.get(`http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/id?id=${id}`)
 
         commit('SET_CURRENT_ANZEIGE', response.data);
-    }
+    },
+
+    async addFavorit ({rootState}, anz_id) {
+        const ben_id = rootState.login.user.id
+        const response = await Axios.post('http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/favorit/add?ben_id=' +
+            ben_id + '&anz_id=' + anz_id);
+
+        return response.data;
+    },
+
+    async filterAnzeigenByWord({commit},word) {
+        const response = await Axios.get(`http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/search?suche=${word}`)
+
+        commit('SET_ANZEIGEN', response.data)
+    },
 
 
 };

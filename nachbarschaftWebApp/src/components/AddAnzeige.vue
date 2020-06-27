@@ -82,6 +82,8 @@
 
                     this.msg = response.data;
 
+                    this.$router.push("/");
+
                 }catch (error) {
                     this.msg = error.response.data;
                 }
