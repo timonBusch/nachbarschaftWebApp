@@ -21,13 +21,13 @@ const actions = {
     login: ({commit}, token) => {
         commit('SET_TOKEN', token);
 
-        // Authentifizierungs heade rsetzten
+        // Authentifizierungs header setzten
         //Axios.defaults.headers.common['Authorization']= `Bearer ${store.state.token}`;
     },
     userLogin: ({commit}, user) => {
         commit('SET_USER', user);
 
-        // Authentifizierungs heade rsetzten
+        // Authentifizierungs header setzten
         //Axios.defaults.headers.common['Authorization']= `Bearer ${store.state.token}`;
     },
     logout: ({ commit }) => {

@@ -35,15 +35,14 @@ const actions = {
         let average = 0;
         if(getters.getBewertungen.length !== 0) {
             for(let i = 0; i< getters.getBewertungen.length; i++) {
-                console.log(getters.getBewertungen[i].sterne)
                 sumStars += getters.getBewertungen[i].sterne;
             }
-            console.log(sumStars);
             average = Math.round((sumStars/getters.getBewertungen.length));
 
         }
         commit('SET_AVERAGE_STARS', average);
-    }
+    },
+
 
 
 };

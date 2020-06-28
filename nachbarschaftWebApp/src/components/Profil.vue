@@ -34,70 +34,87 @@
                                 <div class="input-group mb-3">
                                     <div class="border border-primary rounded-lg w-100 p-2">
                                         <div v-if="editingMode">
-                                            <input v-model="benutzername" type="text" class="form-control border-0">
+                                            <input v-model="benutzername" type="text" class="form-control border-0" placeholder="Benutzername...">
                                         </div>
                                         <div v-else>
                                             <span>{{this.currentUser.benutzername}}</span>
                                         </div>
                                     </div>
-
                                 </div>
 
                                 <label>Vorname:</label>
-
                                 <div class="input-group mb-3">
-                                    <input v-if="isLoggedInUserProfile" type="text" class="form-control" :value="this.user.vorname" disabled>
-                                    <input v-else type="text" class="form-control" :value="this.getUser().vorname" disabled>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button"><i class="fa fa-pen"></i></button>
+                                    <div class="border border-primary rounded-lg w-100 p-2">
+                                        <div v-if="editingMode">
+                                            <input v-model="vorname" type="text" class="form-control border-0" placeholder="Vorname...">
+                                        </div>
+                                        <div v-else>
+                                            <span>{{this.vorname}}</span>
+                                        </div>
                                     </div>
                                 </div>
+
+
 
                                 <label>Nachname:</label>
                                 <div class="input-group mb-3">
-                                    <input v-if="isLoggedInUserProfile" type="text" class="form-control" :value="this.user.nachname" disabled>
-                                    <input v-else type="text" class="form-control" :value="this.getUser().nachname" disabled>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button"><i class="fa fa-pen"></i></button>
+                                    <div class="border border-primary rounded-lg w-100 p-2">
+                                        <div v-if="editingMode">
+                                            <input v-model="nachname" type="text" class="form-control border-0" placeholder="Nachname...">
+                                        </div>
+                                        <div v-else>
+                                            <span>{{this.nachname}}</span>
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
 
                             <div class="col-6">
                                 <label>PLZ:</label>
                                 <div class="input-group mb-3">
-                                    <input v-if="isLoggedInUserProfile" type="text" class="form-control" :value="this.user.plz" disabled>
-                                    <input v-else type="text" class="form-control" :value="this.getUser().plz" disabled>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button"><i class="fa fa-pen"></i></button>
+                                    <div class="border border-primary rounded-lg w-100 p-2">
+                                        <div v-if="editingMode">
+                                            <input v-model="plz" type="text" class="form-control border-0" placeholder="PLZ...">
+                                        </div>
+                                        <div v-else>
+                                            <span>{{this.plz}}</span>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <label>Wohnort:</label>
                                 <div class="input-group mb-3">
-                                    <input v-if="isLoggedInUserProfile" type="text" class="form-control" :value="this.user.wohnort" disabled>
-                                    <input v-else type="text" class="form-control" :value="this.getUser().wohnort" disabled>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button"><i class="fa fa-pen"></i></button>
+                                    <div class="border border-primary rounded-lg w-100 p-2">
+                                        <div v-if="editingMode">
+                                            <input v-model="wohnort" type="text" class="form-control border-0" placeholder="Wohnort...">
+                                        </div>
+                                        <div v-else>
+                                            <span>{{this.wohnort}}</span>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <label>Straße:</label>
                                 <div class="input-group mb-3">
-                                    <input v-if="isLoggedInUserProfile" type="text" class="form-control" :value="this.user.strasse" disabled>
-                                    <input v-else type="text" class="form-control" :value="this.getUser().strasse" disabled>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button"><i class="fa fa-pen"></i></button>
+                                    <div class="border border-primary rounded-lg w-100 p-2">
+                                        <div v-if="editingMode">
+                                            <input v-model="strasse" type="text" class="form-control border-0" placeholder="Straße...">
+                                        </div>
+                                        <div v-else>
+                                            <span>{{this.strasse}}</span>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <label>Hausnummer:</label>
                                 <div class="input-group mb-3">
-                                    <input v-if="isLoggedInUserProfile" type="text" class="form-control" :value="this.user.hausnummer" disabled>
-                                    <input v-else type="text" class="form-control" :value="this.getUser().hausnummer" disabled>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button"><i class="fa fa-pen"></i></button>
+                                    <div class="border border-primary rounded-lg w-100 p-2">
+                                        <div v-if="editingMode">
+                                            <input v-model="hausnummer" type="text" class="form-control border-0" placeholder="Hausnummer...">
+                                        </div>
+                                        <div v-else>
+                                            <span>{{this.hausnummer}}</span>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -105,7 +122,8 @@
 
                         </div>
                         <div class="text-center">
-                            <button v-if="isLoggedInUserProfile" type="button" class="btn btn-primary btn-lg mx-auto">Änderungen speichern</button>
+                            <button v-if="isLoggedInUserProfile  && this.editingMode === true" @click="updateProfile"
+                                    type="button" class="btn btn-primary btn-lg mx-auto">Änderungen speichern</button>
                         </div>
 
                     </div>
@@ -178,8 +196,9 @@
 <script>
     // TODO: Wenn man von einem Fremden Profil auf das eigene geht wird es nicht neu geladen
     // TODO: Eingenes Profil bearbeiten koennen
-    import { mapState, mapGetters, mapActions } from 'vuex'
+    import {mapActions, mapGetters, mapState} from 'vuex'
     import Axios from "axios";
+    import BenutzerService from "../services/BenutzerService";
 
     export default {
         name: "Profil",
@@ -198,6 +217,8 @@
                 wohnort: '',
                 strasse: '',
                 hausnummer: '',
+                isLoggedInUserProfile: '',
+                msg: ''
             }
         },
 
@@ -206,6 +227,7 @@
                 this.editingMode = !this.editingMode;
             },
             ...mapActions('benutzer', ['fetchBewertungenByUserId', 'fetchUserInformationById', 'calcAverageStars']),
+            ...mapActions('login', ['userLogin']),
             ...mapGetters('benutzer', ['getBewertungen', 'getUser', 'getAverageStars']),
             ...mapGetters('login', ['isLoggedIn']),
             convert: function (value) {
@@ -237,10 +259,13 @@
                     await this.fetchUserInformationById(this.id);
                     await this.fetchBewertungenByUserId(this.getUser().id);
                     this.currentUser = this.getUser();
+                    this.isLoggedInUserProfile = this.getUser().id === this.user.id;
                     this.calcAverageStars();
 
                 }else {
+
                     this.currentUser = this.user;
+                    this.isLoggedInUserProfile = true;
                     await this.fetchBewertungenByUserId(this.user.id);
                     this.calcAverageStars();
 
@@ -253,6 +278,46 @@
                 this.strasse = this.currentUser.strasse;
                 this.hausnummer = this.currentUser.hausnummer;
             },
+            /**
+             * Aktualisiere
+             * @returns {Promise<void>}
+             */
+            async updateProfile() {
+                if(this.editingMode === true) {
+                    try {
+                        const userData = {
+                            id: this.user.id,
+                            benutzername: this.benutzername,
+                            vorname: this.vorname,
+                            nachname: this.nachname,
+                            plz: this.plz,
+                            wohnort: this.wohnort,
+                            strasse: this.strasse,
+                            hausnummer: this.hausnummer,
+                            email: this.user.email,
+                            passwort: this.user.passwort,
+                            typ: this.user.typ,
+                            art: this.user.art
+                        }
+
+                        this.msg = await BenutzerService.updateProfile(userData)
+
+                        // Lade Benutzer mit geaenderten Daten
+                        await this.fetchUserInformationById(this.user.id);
+                        this.userLogin(this.getUser());
+
+                        // Bearbeitung beenden
+                        this.editingMode = false
+
+                    }catch (error) {
+                        error.response.data
+                    }
+                }else {
+                    // TODO: Info an den Benutzer geben
+                    console.log("Bitte wechseln Sie in den editier Modus")
+                }
+
+            }
         },
         computed: mapState('login',['user']),
         created() {
