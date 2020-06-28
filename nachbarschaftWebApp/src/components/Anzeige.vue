@@ -6,22 +6,10 @@
                     <div class="col pb-2">
                         <h3> {{ this.getCurrentAnzeige.titel }} </h3>
                     </div>
-                </div>
-                <div class="row mb-2 mx-2">
-                    <div class="col-2">
-                        <button @click="pushToAnzeige(getCurrentAnzeige.ben_id)" type="button" class="btn btn-primary">Vollständiges Profil</button>
-                    </div>
-                    <div class="col-10">
-                        <h3 class="float-left"><span class="font-weight-bold">Thema:</span> {{this.getCurrentAnzeige.thema}} </h3>
-                        <button @click="removeAnzeige(getCurrentAnzeige.id)" v-if="this.getCurrentAnzeige.ben_id === this.user.id" type="button" class="btn btn-primary btn-sm float-right">
-                            <i class="fa fa-times"></i>
-                        </button>
-                        <button v-if="this.isLoggedIn" @click="addFavoritToData" type="button" class="btn btn-primary btn-sm float-right mr-3">
-                            <i class="fa fa-heart"></i>
-                        </button>
-                        <!-- Melden Button: -->
-                        <b-button v-b-modal.modal-prevent-closing v-if="this.isLoggedIn && this.getCurrentAnzeige.ben_id !== this.user.id" type="button" class="btn btn-danger btn-sm float-right mr-3" >
-                            <i class="fa fa-exclamation"></i>
+                    <div v-if="this.isLoggedIn && this.getCurrentAnzeige.ben_id !== this.user.id">
+                        <!-- Melden Button:-->
+                        <b-button v-b-modal.modal-prevent-closing class="btn-danger btn-sm float-right mr-4">
+                            <b-icon :icon="this.ex" scale="2"></b-icon>
                         </b-button>
 
                         <b-modal
@@ -57,6 +45,24 @@
                                 </b-button>
                             </template>
                         </b-modal>
+                    </div>
+                </div>
+                <div class="row mb-2 mx-2">
+                    <div class="col-2">
+                        <button @click="pushToAnzeige(getCurrentAnzeige.ben_id)" type="button" class="btn btn-primary">Vollständiges Profil</button>
+                    </div>
+                    <div class="col-10" >
+                        <div v-if="this.isLoggedIn && this.getCurrentAnzeige.ben_id === this.user.id">
+                            <h3 class="float-left"><span class="font-weight-bold">Thema:</span> {{this.getCurrentAnzeige.thema}} </h3>
+                                <button @click="removeAnzeige(getCurrentAnzeige.id)" type="button" class="btn btn-primary btn-sm float-right">
+                                    <i :class="this.x"></i>
+                                </button>
+                        </div>
+                        <div v-if="this.isLoggedIn">
+                            <button @click="addFavoritToData" type="button" class="btn btn-primary btn-sm float-right mr-2">
+                                <i :class="this.heart"></i>
+                            </button>
+                        </div>
 
                     </div>
                 </div>
@@ -115,11 +121,14 @@
     export default {
         name: "Anzeige",
         props: ['id'],
-        text: "",
         data() {
             return {
                 msg: '',
-                nameState: null
+                nameState: null,
+                text: "",
+                ex: "exclamation",
+                heart: "fa fa-heart",
+                x: "fa fa-times",
             }
         },
         methods: {

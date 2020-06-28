@@ -5,7 +5,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 
-import { BootstrapVue} from 'bootstrap-vue'
+import { BootstrapVue, BootstrapVueIcons} from 'bootstrap-vue'
 import VueRouter from "vue-router";
 import Profil from "./components/Profil";
 import Anzeigen from "./components/Anzeigen";
@@ -17,6 +17,7 @@ import AddAnzeige from "./components/AddAnzeige";
 //import Axios from "axios";
 
 Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
 Vue.use(VueRouter)
 Vue.use(require('vue-moment'));
 
