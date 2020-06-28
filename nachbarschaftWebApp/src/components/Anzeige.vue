@@ -20,7 +20,7 @@
                             <i class="fa fa-heart"></i>
                         </button>
                         <!-- Melden Button: -->
-                        <b-button v-b-modal.modal-prevent-closing v-if="this.isLoggedIn" type="button" class="btn btn-danger btn-sm float-right mr-3" >
+                        <b-button v-b-modal.modal-prevent-closing v-if="this.isLoggedIn && this.getCurrentAnzeige.ben_id !== this.user.id" type="button" class="btn btn-danger btn-sm float-right mr-3" >
                             <i class="fa fa-exclamation"></i>
                         </b-button>
 
@@ -41,16 +41,22 @@
                                 >
                                     <b-form-input
                                             id="name-input"
-                                            v-model="name"
+                                            v-model="text"
                                             :state="nameState"
                                             required
                                     ></b-form-input>
                                 </b-form-group>
                             </form>
+                            <template v-slot:modal-footer="{ ok, cancel}">
+                                <!-- Emulate built in modal footer ok and cancel button actions -->
+                                <b-button size="sm" variant="danger" @click="ok()">
+                                    Melden
+                                </b-button>
+                                <b-button size="sm" @click="cancel()">
+                                    Abbrechen
+                                </b-button>
+                            </template>
                         </b-modal>
-                        <!-- alter button:
-                        <a v-if="this.isLoggedIn" class="float-right pr-3" href="#"><i class="fa fa-exclamation"></i> </a>
-                        -->
 
                     </div>
                 </div>
@@ -109,12 +115,11 @@
     export default {
         name: "Anzeige",
         props: ['id'],
+        text: "",
         data() {
             return {
                 msg: '',
-                name: '',
-                nameState: null,
-                submittedNames: []
+                nameState: null
             }
         },
         methods: {
@@ -134,14 +139,11 @@
                 // Trigger submit handler
                 this.handleSubmit()
             },
-            handleSubmit() {
-                // Exit when the form isn't valid
+            async handleSubmit() {
                 if (!this.checkFormValidity()) {
                     return
                 }
-                // Push the name to submitted names
-                this.submittedNames.push(this.name)
-                // Hide the modal manually
+                await AnzService.anzeigeMelden(this.id, this.text);
                 this.$nextTick(() => {
                     this.$bvModal.hide('modal-prevent-closing')
                 })
