@@ -32,14 +32,17 @@ const actions = {
     },
     calcAverageStars({getters, commit}) {
         let sumStars = 0;
-        for(let i = 0; i< getters.getBewertungen.length; i++) {
-            console.log(getters.getBewertungen[i].sterne)
-            sumStars += getters.getBewertungen[i].sterne;
-        }
-        console.log(sumStars);
-        let average = ((sumStars/getters.getBewertungen.length));
-        commit('SET_AVERAGE_STARS', average);
+        let average = 0;
+        if(getters.getBewertungen.length !== 0) {
+            for(let i = 0; i< getters.getBewertungen.length; i++) {
+                console.log(getters.getBewertungen[i].sterne)
+                sumStars += getters.getBewertungen[i].sterne;
+            }
+            console.log(sumStars);
+            average = Math.round((sumStars/getters.getBewertungen.length));
 
+        }
+        commit('SET_AVERAGE_STARS', average);
     }
 
 

@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
-import 'bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
+
+import { BootstrapVue} from 'bootstrap-vue'
 import VueRouter from "vue-router";
 import Profil from "./components/Profil";
 import Anzeigen from "./components/Anzeigen";
@@ -14,7 +16,7 @@ import Anzeige from "./components/Anzeige";
 import AddAnzeige from "./components/AddAnzeige";
 //import Axios from "axios";
 
-
+Vue.use(BootstrapVue)
 Vue.use(VueRouter)
 Vue.use(require('vue-moment'));
 

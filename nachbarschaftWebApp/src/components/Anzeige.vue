@@ -107,7 +107,7 @@
 </template>
 
 <script>
-    // 6TODO: Bewertungen auswerten und Sterne anpassen
+    // TODO: Bewertungen auswerten und Sterne anpassen
     // TODO: Chat
     // TODO: Eigene Anzeige bearbeiten koennen ?
     // TODO: Favoriten entfernen

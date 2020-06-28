@@ -5,16 +5,24 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h1 class="card-title">Profil</h1>
+                    <span class="card-title h2">Profil</span>
+                    <button @click="enableEditingMode" type="button" class="btn btn-primary float-right">
+                        <i class="fa fa-pen"></i>
+                    </button>
                     <div class="container-fluid">
                     </div>
                 </div>
                 <div class="col">
                     <p>Bewertung:</p>
-                    <div  v-for="n in this.getAverageStars()" :key="n">
-                        <span class="fa fa-star checked"></span>
-                    </div>
+                    <div v-if="this.getAverageStars !== 0">
+                        <div  v-for="n in this.getAverageStars()" :key="n">
 
+                            <span class="fa fa-star checked float-left"></span>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <span>Keine Bewertungen vorhanden</span>
+                    </div>
                 </div>
                 <div class="card-body">
 
@@ -24,16 +32,19 @@
 
                                 <label>Benutzername:</label>
                                 <div class="input-group mb-3">
-                                    <input v-if="isLoggedInUserProfile" type="text" class="form-control" :value="this.user.benutzername"
-                                           :disabled="!this.validated">
-                                    <input v-else type="text" class="form-control" :value="this.getUser().benutzername"
-                                           :disabled="!this.validated">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" @click="enableInput" type="button" id="button"><i class="fa fa-pen"></i></button>
+                                    <div class="border border-primary rounded-lg w-100 p-2">
+                                        <div v-if="editingMode">
+                                            <input v-model="benutzername" type="text" class="form-control border-0">
+                                        </div>
+                                        <div v-else>
+                                            <span>{{this.currentUser.benutzername}}</span>
+                                        </div>
                                     </div>
+
                                 </div>
 
                                 <label>Vorname:</label>
+
                                 <div class="input-group mb-3">
                                     <input v-if="isLoggedInUserProfile" type="text" class="form-control" :value="this.user.vorname" disabled>
                                     <input v-else type="text" class="form-control" :value="this.getUser().vorname" disabled>
@@ -136,7 +147,6 @@
                 </div>
                 <div class="col"/>
             </div>
-
         </div>
         <div v-if="this.isLoggedIn()">
             <div v-if="!isLoggedInUserProfile" class="row mt-3">
@@ -162,9 +172,6 @@
                 </div>
             </div>
         </div>
-
-
-
     </div>
 </template>
 
@@ -179,17 +186,24 @@
         props: ['id'],
         data: function() {
             return {
-                validated: false,
+                currentUser: '',
                 kommentar: '',
                 sterne: '',
                 bewertungText: 'Bewertung...',
-                isLoggedInUserProfile: true,
+                editingMode: false,
+                benutzername: '',
+                vorname: '',
+                nachname: '',
+                plz: '',
+                wohnort: '',
+                strasse: '',
+                hausnummer: '',
             }
         },
 
         methods: {
-            enableInput: function () {
-                this.validated = !this.validated;
+            enableEditingMode: function () {
+                this.editingMode = !this.editingMode;
             },
             ...mapActions('benutzer', ['fetchBewertungenByUserId', 'fetchUserInformationById', 'calcAverageStars']),
             ...mapGetters('benutzer', ['getBewertungen', 'getUser', 'getAverageStars']),
@@ -222,15 +236,22 @@
                 if(this.$route.params.id) {
                     await this.fetchUserInformationById(this.id);
                     await this.fetchBewertungenByUserId(this.getUser().id);
-                    this.isLoggedInUserProfile = this.getUser().id === this.user.id;
+                    this.currentUser = this.getUser();
                     this.calcAverageStars();
 
                 }else {
+                    this.currentUser = this.user;
                     await this.fetchBewertungenByUserId(this.user.id);
-                    this.isLoggedInUserProfile = true;
                     this.calcAverageStars();
 
                 }
+                this.benutzername = this.currentUser.benutzername;
+                this.vorname = this.currentUser.vorname;
+                this.nachname = this.currentUser.nachname;
+                this.plz = this.currentUser.plz;
+                this.wohnort = this.currentUser.wohnort;
+                this.strasse = this.currentUser.strasse;
+                this.hausnummer = this.currentUser.hausnummer;
             },
         },
         computed: mapState('login',['user']),
