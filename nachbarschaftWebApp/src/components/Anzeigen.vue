@@ -67,9 +67,7 @@
                           <span class="badge badge-success">{{ convert(post.datum) }}</span>
                           <span class="badge badge-info ml-3">Thema: {{post.thema}}</span>
                           <span v-if="post.ben_id === getUser.id" class="fa fa-user ml-3"></span>
-                          <button v-if="filterFavByAnzIdAndBenId(post.id).length !== 0" type="button" class="btn btn-primary btn-sm">
-                            <i class="fa fa-heart"></i>
-                          </button>
+
 
                         </div>
                       </div>
@@ -121,6 +119,7 @@ export default {
     },
     ...mapActions("anzeigen",["fetchAnzeigen", "filterAnzeigenEigene"
       , "filterAnzeigenFavoriten", "filterFavoritenByAnzId", "filterAnzeigenByWord"]),
+
     async filterFavByAnzIdAndBenId(anz_id) {
       try {
         const response = await AnzService.filterFavoritenByAnzIdAndBenId(anz_id, this.getUser.id);

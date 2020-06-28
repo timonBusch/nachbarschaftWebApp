@@ -6,12 +6,14 @@ import Axios from "axios";
 const state = {
     user: [],
     bewertungen: [],
+    averageStars: '',
 };
 
 // Getter to return state variables
 const getters = {
     getUser: state => state.user,
     getBewertungen: state => state.bewertungen,
+    getAverageStars: state => state.averageStars,
 };
 
 // Actions that call mutation functions
@@ -28,6 +30,18 @@ const actions = {
 
         commit('SET_BEWERTUNGEN', response.data);
     },
+    calcAverageStars({getters, commit}) {
+        let sumStars = 0;
+        for(let i = 0; i< getters.getBewertungen.length; i++) {
+            console.log(getters.getBewertungen[i].sterne)
+            sumStars += getters.getBewertungen[i].sterne;
+        }
+        console.log(sumStars);
+        let average = ((sumStars/getters.getBewertungen.length));
+        commit('SET_AVERAGE_STARS', average);
+
+    }
+
 
 };
 
@@ -37,6 +51,7 @@ const mutations = {
     SET_BEWERTUNGEN: (state, bewertungen) => (state.bewertungen = bewertungen),
     CLEAR_BEWERTUNGEN: (state) => (state.bewertungen = []),
     CLEAR_USER: (state) => (state.user = []),
+    SET_AVERAGE_STARS: (state, average) => (state.averageStars = average),
 
 };
 

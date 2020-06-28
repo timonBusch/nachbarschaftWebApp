@@ -11,12 +11,10 @@
                 </div>
                 <div class="col">
                     <p>Bewertung:</p>
+                    <div  v-for="n in this.getAverageStars()" :key="n">
+                        <span class="fa fa-star checked"></span>
+                    </div>
 
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
                 </div>
                 <div class="card-body">
 
@@ -193,8 +191,8 @@
             enableInput: function () {
                 this.validated = !this.validated;
             },
-            ...mapActions('benutzer', ['fetchBewertungenByUserId', 'fetchUserInformationById']),
-            ...mapGetters('benutzer', ['getBewertungen', 'getUser']),
+            ...mapActions('benutzer', ['fetchBewertungenByUserId', 'fetchUserInformationById', 'calcAverageStars']),
+            ...mapGetters('benutzer', ['getBewertungen', 'getUser', 'getAverageStars']),
             ...mapGetters('login', ['isLoggedIn']),
             convert: function (value) {
                 return  new Date(value).toLocaleString();
@@ -208,7 +206,8 @@
                         ben_id: this.getUser().id,
                     };
 
-                    const response = await Axios.post('http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/bewertung/add?ben_id=' + bewertungInfo.ben_id +
+                    const response = await Axios.post('http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/bewertung/add?ben_id='
+                        + bewertungInfo.ben_id +
                         '&bewerter_id=' + bewertungInfo.bewerter_id + '&sterne=' + bewertungInfo.sterne + '&kommentar=' + bewertungInfo.kommentar);
 
                     this.msg = response.data;
@@ -222,13 +221,17 @@
             async loadUserAndBewertung() {
                 if(this.$route.params.id) {
                     await this.fetchUserInformationById(this.id);
-                    this.fetchBewertungenByUserId(this.getUser().id);
+                    await this.fetchBewertungenByUserId(this.getUser().id);
                     this.isLoggedInUserProfile = this.getUser().id === this.user.id;
+                    this.calcAverageStars();
+
                 }else {
-                    this.fetchBewertungenByUserId(this.user.id);
+                    await this.fetchBewertungenByUserId(this.user.id);
                     this.isLoggedInUserProfile = true;
+                    this.calcAverageStars();
+
                 }
-            }
+            },
         },
         computed: mapState('login',['user']),
         created() {
