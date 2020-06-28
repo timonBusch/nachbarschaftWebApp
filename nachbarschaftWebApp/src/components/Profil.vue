@@ -12,7 +12,7 @@
                 <div class="col">
                     <p>Bewertung:</p>
                     <div  v-for="n in this.getAverageStars()" :key="n">
-                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked float-left"></span>
                     </div>
 
                 </div>

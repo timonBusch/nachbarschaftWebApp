@@ -20,7 +20,7 @@
                             <i class="fa fa-heart"></i>
                         </button>
 
-                        <a v-if="this.isLoggedIn" class="float-right pr-3" href="#"><i class="fa fa-exclamation"></i> </a>
+                        <a v-if="this.isLoggedIn" class="float-right pr-3" href="#"><i class="fa fa-exclamation"></i></a>
                     </div>
                 </div>
 
