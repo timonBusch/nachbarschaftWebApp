@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-header">
                     <span class="card-title h2">Profil</span>
-                    <button @click="enableEditingMode" type="button" class="btn btn-primary float-right">
+                    <button v-if="isLoggedInUserProfile" @click="enableEditingMode" type="button" class="btn btn-primary float-right">
                         <i class="fa fa-pen"></i>
                     </button>
                     <div class="container-fluid">
@@ -279,11 +279,11 @@
                 this.hausnummer = this.currentUser.hausnummer;
             },
             /**
-             * Aktualisiere
+             * Aktualisiere Benutzer Daten
              * @returns {Promise<void>}
              */
             async updateProfile() {
-                if(this.editingMode === true) {
+
                     try {
                         const userData = {
                             id: this.user.id,
@@ -312,10 +312,6 @@
                     }catch (error) {
                         error.response.data
                     }
-                }else {
-                    // TODO: Info an den Benutzer geben
-                    console.log("Bitte wechseln Sie in den editier Modus")
-                }
 
             }
         },
