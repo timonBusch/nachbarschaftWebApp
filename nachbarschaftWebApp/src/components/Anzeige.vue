@@ -20,22 +20,14 @@
                             <i class="fa fa-heart"></i>
                         </button>
                         <!-- Melden Button: -->
-                        <button v-if="this.isLoggedIn" type="button" class="btn btn-danger btn-sm float-right mr-3" >
+                        <b-button v-b-modal.modal-prevent-closing v-if="this.isLoggedIn" type="button" class="btn btn-danger btn-sm float-right mr-3" >
                             <i class="fa fa-exclamation"></i>
-                        </button>
-
-                        <div class="mt-3">
-                            Submitted Names:
-                            <div v-if="submittedNames.length === 0">--</div>
-                            <ul v-else class="mb-0 pl-3">
-                                <li v-for="name in submittedNames" :key="name">{{ name }}</li>
-                            </ul>
-                        </div>^
+                        </b-button>
 
                         <b-modal
                                 id="modal-prevent-closing"
                                 ref="modal"
-                                title="Submit Your Name"
+                                title="Melden"
                                 @show="resetModal"
                                 @hidden="resetModal"
                                 @ok="handleOk"
@@ -43,9 +35,9 @@
                             <form ref="form" @submit.stop.prevent="handleSubmit">
                                 <b-form-group
                                         :state="nameState"
-                                        label="Name"
+                                        label="Bitte geben Sie die Beschwerde ein"
                                         label-for="name-input"
-                                        invalid-feedback="Name is required"
+                                        invalid-feedback="Sie müssen einen Grund angeben"
                                 >
                                     <b-form-input
                                             id="name-input"
