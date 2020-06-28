@@ -19,8 +19,47 @@
                         <button v-if="this.isLoggedIn" @click="addFavoritToData" type="button" class="btn btn-primary btn-sm float-right mr-3">
                             <i class="fa fa-heart"></i>
                         </button>
+                        <!-- Melden Button: -->
+                        <button v-if="this.isLoggedIn" type="button" class="btn btn-danger btn-sm float-right mr-3" >
+                            <i class="fa fa-exclamation"></i>
+                        </button>
 
+                        <div class="mt-3">
+                            Submitted Names:
+                            <div v-if="submittedNames.length === 0">--</div>
+                            <ul v-else class="mb-0 pl-3">
+                                <li v-for="name in submittedNames" :key="name">{{ name }}</li>
+                            </ul>
+                        </div>^
+
+                        <b-modal
+                                id="modal-prevent-closing"
+                                ref="modal"
+                                title="Submit Your Name"
+                                @show="resetModal"
+                                @hidden="resetModal"
+                                @ok="handleOk"
+                        >
+                            <form ref="form" @submit.stop.prevent="handleSubmit">
+                                <b-form-group
+                                        :state="nameState"
+                                        label="Name"
+                                        label-for="name-input"
+                                        invalid-feedback="Name is required"
+                                >
+                                    <b-form-input
+                                            id="name-input"
+                                            v-model="name"
+                                            :state="nameState"
+                                            required
+                                    ></b-form-input>
+                                </b-form-group>
+                            </form>
+                        </b-modal>
+                        <!-- alter button:
                         <a v-if="this.isLoggedIn" class="float-right pr-3" href="#"><i class="fa fa-exclamation"></i> </a>
+                        -->
+
                     </div>
                 </div>
 
@@ -68,7 +107,7 @@
 </template>
 
 <script>
-    // TODO: Bewertungen auswerten und Sterne anpassen
+    // 6TODO: Bewertungen auswerten und Sterne anpassen
     // TODO: Chat
     // TODO: Eigene Anzeige bearbeiten koennen ?
     // TODO: Favoriten entfernen
@@ -81,11 +120,43 @@
         data() {
             return {
                 msg: '',
+                name: '',
+                nameState: null,
+                submittedNames: []
             }
         },
         methods: {
+
+            checkFormValidity() {
+                const valid = this.$refs.form.checkValidity()
+                this.nameState = valid
+                return valid
+            },
+            resetModal() {
+                this.name = ''
+                this.nameState = null
+            },
+            handleOk(bvModalEvt) {
+                // Prevent modal from closing
+                bvModalEvt.preventDefault()
+                // Trigger submit handler
+                this.handleSubmit()
+            },
+            handleSubmit() {
+                // Exit when the form isn't valid
+                if (!this.checkFormValidity()) {
+                    return
+                }
+                // Push the name to submitted names
+                this.submittedNames.push(this.name)
+                // Hide the modal manually
+                this.$nextTick(() => {
+                    this.$bvModal.hide('modal-prevent-closing')
+                })
+            },
             ...mapActions("anzeigen", ["filterAnzeigenById", "addFavorit"]),
             ...mapActions("benutzer", ["fetchUserInformationById"]),
+
             async fetchAnzeigenInformation() {
                 await this.filterAnzeigenById(this.id);
                 await this.fetchUserInformationById(this.getCurrentAnzeige.ben_id);
