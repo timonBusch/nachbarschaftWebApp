@@ -9,7 +9,7 @@
                     <div v-if="this.isLoggedIn && this.getCurrentAnzeige.ben_id !== this.user.id">
                         <!-- Melden Button:-->
                         <b-button v-b-modal.modal-prevent-closing class="btn-danger btn-sm float-right mr-4">
-                            <b-icon :icon="this.ex" scale="2"></b-icon>
+                            <i :class="this.ex"></i>
                         </b-button>
 
                         <b-modal
@@ -126,7 +126,7 @@
                 msg: '',
                 nameState: null,
                 text: "",
-                ex: "exclamation",
+                ex: "fa fa-exclamation",
                 heart: "fa fa-heart",
                 x: "fa fa-times",
             }
