@@ -13,13 +13,13 @@
                              v-if="selected === 'Benutzer' && current.ben_id || selected === 'Alle' || selected === 'Anzeigen' && current.anz_id"
 
                         >
-                            <router-link :to="{ name: getBenOrAnz_id(current).route, params: { id: getBenOrAnz_id(current).routeId.toString() } }">
+                            <router-link class="text-decoration-none" :to="{ name: getBenOrAnz_id(current).route, params: { id: getBenOrAnz_id(current).routeId.toString() } }">
                                 <div class="card-header">
-                                    <span class="text-decoration-none"> {{ convert(current.zeitpunkt)}} </span>
-                                    <span class="float-right"> {{ }} </span>
+                                    <span> {{ convert(current.zeitpunkt)}} </span>
+                                    <span class="float-right"> <strong> {{ getBenOrAnz_id(current).routeName }} </strong> </span>
                                 </div>
                                 <div class="card-body">
-                                    <span class="text-decoration-none">{{current.grund}} </span>
+                                    <span class="">{{current.grund}} </span>
                                 </div>
                             </router-link>
                         </div>
@@ -57,12 +57,14 @@
                 if (current.ben_id != null) {
                     return {
                         route: 'profil',
-                        routeId: current.ben_id
+                        routeId: current.ben_id,
+                        routeName: 'Benutzer'
                     }
                 } else {
                     return {
                         route: 'anzeige',
-                        routeId: current.anz_id
+                        routeId: current.anz_id,
+                        routeName: 'Anzeige'
                     }
                 }
             }
@@ -77,5 +79,9 @@
 </script>
 
 <style scoped>
+
+    .nounderline {
+        text-decoration: none !important
+    }
 
 </style>

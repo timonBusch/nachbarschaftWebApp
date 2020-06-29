@@ -6,12 +6,12 @@
             <div class="card">
                 <div class="card-header">
                     <span class="card-title h2">Profil</span>
-                    <button v-if="isLoggedInUserProfile" @click="enableEditingMode" type="button" class="btn btn-primary float-right">
+                    <button v-if="isLoggedInUserProfile || this.isAdmin" @click="enableEditingMode" type="button" class="btn btn-primary float-right">
                         <i class="fa fa-pen"></i>
                     </button>
                     <!--<div v-if="!isLoggedInUserProfile">-->
                         <!-- Melden Button:-->
-                        <b-button v-if="!isLoggedInUserProfile" v-b-modal.modal-prevent-closing class="btn-danger btn-sm float-right">
+                        <b-button v-if="!isLoggedInUserProfile && !this.isAdmin" v-b-modal.modal-prevent-closing class="btn-danger btn-sm float-right">
                             <i :class="this.ex"></i>
                         </b-button>
 
@@ -92,8 +92,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
 
                                 <label>Nachname:</label>
                                 <div class="input-group mb-3">
@@ -296,7 +294,7 @@
             ...mapActions('benutzer', ['fetchBewertungenByUserId', 'fetchUserInformationById', 'calcAverageStars']),
             ...mapActions('login', ['userLogin']),
             ...mapGetters('benutzer', ['getBewertungen', 'getUser', 'getAverageStars']),
-            ...mapGetters('login', ['isLoggedIn']),
+            ...mapGetters('login', ['isLoggedIn', 'isAdmin']),
             convert: function (value) {
                 return  new Date(value).toLocaleString();
             },
