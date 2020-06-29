@@ -16,6 +16,7 @@ import Anzeige from "./components/Anzeige";
 import AddAnzeige from "./components/AddAnzeige";
 import Chat from "./components/Chat";
 import ChatOverview from "./components/ChatOverview";
+import Meldungen from "./components/Meldungen";
 //import Axios from "axios";
 
 Vue.use(BootstrapVue)
@@ -29,6 +30,10 @@ Vue.config.productionTip = false
 const router = new VueRouter({
   routes: [
     { path: '/', component: Anzeigen},
+    { path: '/meldungen',
+      name: 'meldungen',
+      component: Meldungen,
+    },
     {
       path: '/profil/:id?',
       name: 'profil',

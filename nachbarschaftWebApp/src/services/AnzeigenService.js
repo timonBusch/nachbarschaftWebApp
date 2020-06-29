@@ -29,7 +29,7 @@ export default {
     async benutzerMelden(ben_id, text) {
         let status = "Pruefung durch Admin";
         const response = await Axios.post('http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/meldung/add?' +
-            'ben_id=${ben_id}' + ben_id + '&grund=' + text + '&status=' + status + '&anz_id');
+            'ben_id=' + ben_id + '&grund=' + text + '&status=' + status + '&anz_id');
 
         return response.data;
     }

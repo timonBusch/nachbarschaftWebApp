@@ -9,6 +9,46 @@
                     <button v-if="isLoggedInUserProfile" @click="enableEditingMode" type="button" class="btn btn-primary float-right">
                         <i class="fa fa-pen"></i>
                     </button>
+                    <!--<div v-if="!isLoggedInUserProfile">-->
+                        <!-- Melden Button:-->
+                        <b-button v-if="!isLoggedInUserProfile" v-b-modal.modal-prevent-closing class="btn-danger btn-sm float-right">
+                            <i :class="this.ex"></i>
+                        </b-button>
+
+                        <b-modal
+                                id="modal-prevent-closing"
+                                ref="modal"
+                                title="Melden"
+                                @show="resetModal"
+                                @hidden="resetModal"
+                                @ok="handleOk"
+                        >
+                            <form ref="form" @submit.stop.prevent="handleSubmit">
+                                <b-form-group
+                                        :state="nameState"
+                                        label="Bitte geben Sie die Beschwerde ein"
+                                        label-for="name-input"
+                                        invalid-feedback="Sie müssen einen Grund angeben"
+                                >
+                                    <b-form-input
+                                            id="name-input"
+                                            v-model="text"
+                                            :state="nameState"
+                                            required
+                                    ></b-form-input>
+                                </b-form-group>
+                            </form>
+                            <template v-slot:modal-footer="{ ok, cancel}">
+                                <!-- Emulate built in modal footer ok and cancel button actions -->
+                                <b-button size="sm" variant="danger" @click="ok()">
+                                    Melden
+                                </b-button>
+                                <b-button size="sm" @click="cancel()">
+                                    Abbrechen
+                                </b-button>
+                            </template>
+                        </b-modal>
+                    <!--</div>-->
                     <div class="container-fluid">
                     </div>
                 </div>
@@ -179,7 +219,7 @@
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                     <option value="4">4</option>
-                                    <option value="4">5</option>
+                                    <option value="5">5</option>
                                 </select>
                             </div>
                         </div>
@@ -198,6 +238,7 @@
     import {mapActions, mapGetters, mapState} from 'vuex'
     import Axios from "axios";
     import BenutzerService from "../services/BenutzerService";
+    import AnzService from "../services/AnzeigenService";
 
     export default {
         name: "Profil",
@@ -217,11 +258,38 @@
                 strasse: '',
                 hausnummer: '',
                 isLoggedInUserProfile: '',
-                msg: ''
+                msg: '',
+                ex: "fa fa-exclamation",
+                text: "",
+                nameState: null
             }
         },
 
         methods: {
+            checkFormValidity() {
+                const valid = this.$refs.form.checkValidity()
+                this.nameState = valid
+                return valid
+            },
+            resetModal() {
+                this.name = ''
+                this.nameState = null
+            },
+            handleOk(bvModalEvt) {
+                // Prevent modal from closing
+                bvModalEvt.preventDefault()
+                // Trigger submit handler
+                this.handleSubmit()
+            },
+            async handleSubmit() {
+                if (!this.checkFormValidity()) {
+                    return
+                }
+                await AnzService.benutzerMelden(this.id, this.text);
+                this.$nextTick(() => {
+                    this.$bvModal.hide('modal-prevent-closing')
+                })
+            },
             enableEditingMode: function () {
                 this.editingMode = !this.editingMode;
             },
