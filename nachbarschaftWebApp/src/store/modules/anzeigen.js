@@ -1,5 +1,6 @@
 
 import Axios from "axios";
+import vue from 'vue';
 
 // Saves the current state
 const state = {
@@ -61,6 +62,7 @@ const actions = {
         commit('CLEAR_FAVORITEN');
        for (const fav of responseFav.data) {
            const responseR = await Axios.get(`http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/id?id=${fav.anz_id}`)
+           vue.set(responseR.data, 'isFavorit', true);
 
            commit('COLLECT_FAVORITEN', responseR.data);
        }

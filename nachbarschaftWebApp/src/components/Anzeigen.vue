@@ -99,7 +99,6 @@
 
 <script>
   import {mapActions, mapGetters} from "vuex";
-  import AnzService from "../services/AnzeigenService";
   // TODO: Markierung für Favorit (in Anzeige versuchen)
   // TODO: Typ/Art Filterung (Firma, Privat)
 export default {
@@ -120,17 +119,7 @@ export default {
     ...mapActions("anzeigen",["fetchAnzeigen", "filterAnzeigenEigene"
       , "filterAnzeigenFavoriten", "filterFavoritenByAnzId", "filterAnzeigenByWord"]),
 
-    async filterFavByAnzIdAndBenId(anz_id) {
-      try {
-        const response = await AnzService.filterFavoritenByAnzIdAndBenId(anz_id, this.getUser.id);
-        this.msg = response.data;
 
-        return response.data
-      }catch (error) {
-        error.response
-      }
-
-    },
     async filterBySearchWord() {
       try {
         this.msg = await this.filterAnzeigenByWord(this.wordToSearch);

@@ -9,7 +9,7 @@
                     <div class="list-group list-group-flush">
                         <div v-for="chat of this.getLastChats()" :key="chat.nachricht">
                             <router-link :to="{ name: 'chat', params: {partnerId: chat.chatpartner.toString()}}">
-                                <div class="list-group-item list-group-item-action bg-light">
+                                <div class="list-group-item list-group-item-action bg-light text-decoration-none">
                                     <span class="h5 text-decoration-none">{{ chat.benutzername }}</span>
                                     <span class="h5 float-right">{{convert(chat.zeit)}}</span>
                                 </div>

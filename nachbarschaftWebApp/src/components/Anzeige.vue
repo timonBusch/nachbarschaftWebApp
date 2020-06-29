@@ -58,8 +58,13 @@
                                     <i :class="this.x"></i>
                                 </button>
                         </div>
-                        <div v-if="this.isLoggedIn">
+                        <div v-if="this.isLoggedIn && !isFavorit">
                             <button @click="addFavoritToData" type="button" class="btn btn-primary btn-sm float-right mr-2">
+                                <i :class="this.heart"></i>
+                            </button>
+                        </div>
+                        <div v-else-if="this.isLoggedIn && isFavorit">
+                            <button @click="addFavoritToData" type="button" class="btn btn-danger btn-sm float-right mr-2">
                                 <i :class="this.heart"></i>
                             </button>
                         </div>
@@ -94,7 +99,9 @@
                         </div>
                         <div class="row">
                             <div class="col pt-5">
-                                <button type="button" class="btn btn-primary btn-block"><i class="fa fa-comment"></i></button>
+                                <router-link :to="{ name: 'chat', params: {partnerId: getUser.id}}">
+                                    <button type="button" class="btn btn-primary btn-block"><i class="fa fa-comment"></i></button>
+                                </router-link>
                             </div>
                         </div>
 
@@ -111,8 +118,7 @@
 </template>
 
 <script>
-    // TODO: Bewertungen auswerten und Sterne anpassen
-    // TODO: Chat
+
     // TODO: Eigene Anzeige bearbeiten koennen ?
     // TODO: Favoriten entfernen
     import {mapActions, mapGetters, mapState} from "vuex";
@@ -129,6 +135,7 @@
                 ex: "fa fa-exclamation",
                 heart: "fa fa-heart",
                 x: "fa fa-times",
+                isFavorit: '',
             }
         },
         methods: {
@@ -163,6 +170,7 @@
             async fetchAnzeigenInformation() {
                 await this.filterAnzeigenById(this.id);
                 await this.fetchUserInformationById(this.getCurrentAnzeige.ben_id);
+                this.checkIsFavorite()
             },
             pushToAnzeige: function (id) {
                 this.$router.push({name: 'profil', params: {id}});
@@ -184,7 +192,7 @@
                     error.response.data
 
                 }
-            }
+            },
         },
         computed: {
             ...mapGetters("anzeigen",["getCurrentAnzeige"]),

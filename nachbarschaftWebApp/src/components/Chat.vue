@@ -3,7 +3,9 @@
         <div class="container-fluid mt-2 w-50">
             <div class="card myNewDivHeight">
                 <div class="card-header">
-                    <h1 class="card-title">Chat - {{ getUser().benutzername }}</h1>
+                    <span class="card-title h1">Chat - {{ getUser().benutzername }}</span>
+                    <button @click="fetchMessages" class="btn btn-primary float-right"><i class="fa fa-sync" aria-hidden="true"></i></button>
+
                 </div>
                 <div class="card-body overflow-auto" id="chat_log">
                     <!-- Nachrichten -->
@@ -63,10 +65,13 @@
                     const message = {
                         von_id: this.user.id,
                         zu_id: this.partnerId,
-                        nachricht: this.nachricht
+                        nachricht: this.nachricht,
+
                     }
                     this.msg = await ChatService.sendMessage(message);
+
                     this.fetchMessages()
+                    //this.fetchMessages()
                     this.nachricht = '';
 
 
@@ -75,6 +80,7 @@
                 }
 
             },
+
             async fetchMessages() {
                 await this.fetchUserInformationById(this.partnerId)
                 await this.fetchReceivedMessages();
