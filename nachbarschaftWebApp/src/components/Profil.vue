@@ -159,7 +159,7 @@
 
                         </div>
                         <div class="text-center">
-                            <button v-if="isLoggedInUserProfile  && this.editingMode === true" @click="updateProfile"
+                            <button v-if="this.editingMode === true && isLoggedInUserProfile" @click="updateProfile"
                                     type="button" class="btn btn-primary btn-lg mx-auto">Änderungen speichern</button>
                         </div>
 

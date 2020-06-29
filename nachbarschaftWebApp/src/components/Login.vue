@@ -95,8 +95,6 @@
                 try {
                         this.cookie_wrong = false;
                         this.datenschutz_wrong = false;
-                        console.log(this.form.cookies);
-                        console.log(this.form.datenschutz);
                         const credentials = {
                             username: this.form.email,
                             password: this.form.password
