@@ -9,9 +9,9 @@
         <div class="list-group list-group-flush">
           <router-link to="/" class="list-group-item list-group-item-action bg-light">Startseite</router-link>
           <div v-if="this.isLoggedIn">
-
             <router-link :to="{ name: 'profil'}" class="list-group-item list-group-item-action bg-light">Profil</router-link>
             <router-link :to="{name: 'add'}" class="list-group-item list-group-item-action bg-light">Neue Anzeige</router-link>
+            <router-link :to="{ name: 'nachrichten'}" class="list-group-item list-group-item-action bg-light">Nachrichten</router-link>
           </div>
 
 

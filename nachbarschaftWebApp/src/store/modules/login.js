@@ -13,7 +13,11 @@ const getters = {
     },
     getUser: state => {
         return state.user;
+    },
+    isAdmin: state => {
+        return state.user.typ === 'admin';
     }
+
 };
 
 // Actions that call mutation functions

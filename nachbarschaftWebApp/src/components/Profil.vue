@@ -16,7 +16,6 @@
                     <p>Bewertung:</p>
                     <div v-if="this.getAverageStars !== 0">
                         <div  v-for="n in this.getAverageStars()" :key="n">
-
                             <span class="fa fa-star checked float-left"></span>
                         </div>
                     </div>

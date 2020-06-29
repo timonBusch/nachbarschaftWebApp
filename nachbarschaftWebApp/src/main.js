@@ -14,6 +14,8 @@ import store from "./store"
 import Registrieren from "./components/Registrieren";
 import Anzeige from "./components/Anzeige";
 import AddAnzeige from "./components/AddAnzeige";
+import Chat from "./components/Chat";
+import ChatOverview from "./components/ChatOverview";
 //import Axios from "axios";
 
 Vue.use(BootstrapVue)
@@ -38,14 +40,31 @@ const router = new VueRouter({
       name: 'login',
       component: Login
     },
-    { path: '/register', component: Registrieren},
+    {
+      path: '/register',
+      component: Registrieren
+    },
     {
       path: '/anzeige/:id',
       name: 'anzeige',
       props: true,
       component: Anzeige
     },
-    {path: '/add_anzeige', name: 'add', component: AddAnzeige}
+    {
+      path: '/add_anzeige',
+      name: 'add',
+      component: AddAnzeige
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+      component: Chat
+    },
+    {
+      path: '/nachrichten',
+      name: 'nachrichten',
+      component: ChatOverview
+    }
   ],
   mode: 'history'
 })
