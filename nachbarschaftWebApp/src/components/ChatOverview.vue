@@ -7,12 +7,15 @@
                 </div>
                 <div class="card-body">
                     <div class="list-group list-group-flush">
-                        <router-link :to="{ name: 'chat'}" >
-                            <div class="list-group-item list-group-item-action bg-light">
-                                <span class="h5 text-decoration-none">Hans Jürgen</span>
-                                <span class="h5 float-right">15.40</span>
-                            </div>
-                        </router-link>
+                        <div v-for="chat of this.getLastChats()" :key="chat.nachricht">
+                            <router-link :to="{ name: 'chat', params: {partnerId: chat.chatpartner.toString()}}">
+                                <div class="list-group-item list-group-item-action bg-light">
+                                    <span class="h5 text-decoration-none">{{ chat.benutzername }}</span>
+                                    <span class="h5 float-right">{{convert(chat.zeit)}}</span>
+                                </div>
+                            </router-link>
+                        </div>
+
                     </div>
 
 
@@ -23,8 +26,19 @@
 </template>
 
 <script>
+    import {mapGetters, mapActions} from 'vuex'
     export default {
-        name: "ChatOverview"
+        name: "ChatOverview",
+        methods: {
+            ...mapGetters('chat', ['getLastChats']),
+            ...mapActions('chat', ['fetchLastChat']),
+            convert: function (value) {
+                return  new Date(value).toLocaleString();
+            }
+        },
+        created() {
+            this.fetchLastChat()
+        }
     }
 </script>
 

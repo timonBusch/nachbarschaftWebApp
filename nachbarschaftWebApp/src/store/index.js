@@ -4,6 +4,7 @@ import createPersistedState from 'vuex-persistedstate';
 import login from './modules/login'
 import anzeigen from './modules/anzeigen'
 import benutzer from './modules/benutzer'
+import chat from './modules/chat'
 
 // Load Vuex
 Vue.use(Vuex);
@@ -15,6 +16,7 @@ export default new Vuex.Store( {
     modules: {
         login,
         anzeigen,
-        benutzer
+        benutzer,
+        chat,
     }
 })

@@ -61,8 +61,9 @@ const router = new VueRouter({
       component: AddAnzeige
     },
     {
-      path: '/chat',
+      path: '/chat/:partnerId',
       name: 'chat',
+      props: true,
       component: Chat
     },
     {
