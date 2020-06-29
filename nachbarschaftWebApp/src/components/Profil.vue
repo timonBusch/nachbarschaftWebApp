@@ -6,12 +6,12 @@
             <div class="card">
                 <div class="card-header">
                     <span class="card-title h2">Profil</span>
-                    <button v-if="isLoggedInUserProfile || this.isAdmin" @click="enableEditingMode" type="button" class="btn btn-primary float-right">
+                    <button v-if="isLoggedInUserProfile || this.isAdmin()" @click="enableEditingMode" type="button" class="btn btn-primary float-right">
                         <i class="fa fa-pen"></i>
                     </button>
                     <!--<div v-if="!isLoggedInUserProfile">-->
                         <!-- Melden Button:-->
-                        <b-button v-if="!isLoggedInUserProfile && !this.isAdmin" v-b-modal.modal-prevent-closing class="btn-danger btn-sm float-right">
+                        <b-button v-if="!isLoggedInUserProfile && !this.isAdmin()" v-b-modal.modal-prevent-closing class="btn-danger btn-sm float-right">
                             <i :class="this.ex"></i>
                         </b-button>
 
@@ -159,7 +159,7 @@
 
                         </div>
                         <div class="text-center">
-                            <button v-if="this.editingMode === true && isLoggedInUserProfile" @click="updateProfile"
+                            <button v-if="this.editingMode === true && isLoggedInUserProfile || this.isAdmin() && this.editingMode === true" @click="updateProfile"
                                     type="button" class="btn btn-primary btn-lg mx-auto">Änderungen speichern</button>
                         </div>
 
@@ -350,8 +350,9 @@
             async updateProfile() {
 
                     try {
+
                         const userData = {
-                            id: this.user.id,
+                            id: this.currentUser.id,
                             benutzername: this.benutzername,
                             vorname: this.vorname,
                             nachname: this.nachname,
@@ -359,10 +360,10 @@
                             wohnort: this.wohnort,
                             strasse: this.strasse,
                             hausnummer: this.hausnummer,
-                            email: this.user.email,
-                            passwort: this.user.passwort,
-                            typ: this.user.typ,
-                            art: this.user.art
+                            email: this.currentUser.email,
+                            passwort: this.currentUser.passwort,
+                            typ: this.currentUser.typ,
+                            art: this.currentUser.art
                         }
 
                         this.msg = await BenutzerService.updateProfile(userData)
