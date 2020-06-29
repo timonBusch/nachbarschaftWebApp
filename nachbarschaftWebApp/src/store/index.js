@@ -5,6 +5,7 @@ import login from './modules/login'
 import anzeigen from './modules/anzeigen'
 import benutzer from './modules/benutzer'
 import chat from './modules/chat'
+import meldungen from './modules/meldungen'
 
 // Load Vuex
 Vue.use(Vuex);
@@ -18,5 +19,6 @@ export default new Vuex.Store( {
         anzeigen,
         benutzer,
         chat,
+        meldungen,
     }
 })

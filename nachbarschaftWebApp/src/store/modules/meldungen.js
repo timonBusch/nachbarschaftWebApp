@@ -13,7 +13,7 @@ const getters = {
 const actions = {
 
     async getAllMeldungen({commit}) {
-        const response = await Axios.get("http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/favorit/all");
+        const response = await Axios.get("http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/meldung/all");
 
             commit('SET_MELDUNG', response.data);
     },

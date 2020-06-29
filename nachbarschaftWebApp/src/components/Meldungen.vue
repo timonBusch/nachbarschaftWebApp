@@ -3,28 +3,25 @@
         <div class="card" @load="this.getAllMeldungen">
             <div class="card-header">
                 <span class="card-title h2">Meldungen</span>
-
+                <b-form-select class="col-2 float-right" v-model="selected" :options="options"></b-form-select>
             </div>
-            <b-form-select class="col-2 form-group form-control" style="margin-top: 10px" v-model="selected" :options="options"></b-form-select>
-            <!--
-            <select class="col-2 form-group form-control" style="margin-top: 10px">
-                <option >Alle</option>
-                <option>Anzeigen</option>
-                <option>Benutzer</option>
-            </select>
-            -->
             <div class="card-body">
                 <div v-if="allMeldungen && allMeldungen.length">
-                    <div class="card" v-for="currentMeldung of allMeldungen" :key="currentMeldung.id">
-                        <div class="card-header">
-                            <!-- TODO: Benutzer- oder Anzeigenname -->
+                    <div v-for="current of allMeldungen" :key="current.id">
+                        <div class="card"
+                             style="margin-top: 10px"
+                             v-if="selected === 'Benutzer' && current.ben_id || selected === 'Alle' || selected === 'Anzeigen' && current.anz_id"
 
-                        </div>
-                        <div class="card-body">
-                            <!-- TODO: Grund -->
-                        </div>
-                        <div class="card-footer">
-                            <!-- TODO: Status -->
+                        >
+                            <router-link :to="{ name: getBenOrAnz_id(current).route, params: { id: getBenOrAnz_id(current).routeId.toString() } }">
+                                <div class="card-header">
+                                    <span class="text-decoration-none"> {{ convert(current.zeitpunkt)}} </span>
+                                    <span class="float-right"> {{ }} </span>
+                                </div>
+                                <div class="card-body">
+                                    <span class="text-decoration-none">{{current.grund}} </span>
+                                </div>
+                            </router-link>
                         </div>
                     </div>
                 </div>
@@ -43,16 +40,32 @@
         name: "Meldungen",
         data() {
             return {
-                selected: null,
+                selected: 'Alle',
                 options: [
-                    { value: null, text: 'Alle'},
+                    { value: 'Alle', text: 'Alle'},
                     { value: 'Anzeigen', text: 'Anzeigen'},
-                    { value: 'Benutezr', text: 'Benutzer'}
+                    { value: 'Benutzer', text: 'Benutzer'}
                 ]
             }
         },
         methods: {
+            convert: function (value) {
+                return  new Date(value).toLocaleString();
+            },
             ...mapActions("meldungen",["getAllMeldungen"]),
+            getBenOrAnz_id(current) {
+                if (current.ben_id != null) {
+                    return {
+                        route: 'profil',
+                        routeId: current.ben_id
+                    }
+                } else {
+                    return {
+                        route: 'anzeige',
+                        routeId: current.anz_id
+                    }
+                }
+            }
         },
         computed: {
             ...mapGetters("meldungen",["allMeldungen"]),
