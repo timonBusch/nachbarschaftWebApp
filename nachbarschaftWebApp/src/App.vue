@@ -59,6 +59,9 @@
 </template>
 
 <script>
+  // TODO: Themen hinzufuegen, Datenschutz- und Nutzungsbedingungen
+  // TODO: Chat bei Profil nur dann anzeigen wenn man angemeldet ist
+  // TODO: Registrieren: Wohnort hinzufuegen
   import { mapState, mapActions, mapGetters } from 'vuex'
   export default {
     name: 'App',

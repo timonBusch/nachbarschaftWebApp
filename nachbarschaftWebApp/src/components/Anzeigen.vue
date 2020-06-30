@@ -101,7 +101,7 @@
 <script>
   import {mapActions, mapGetters} from "vuex";
   import AnzService from "../services/AnzeigenService";
-  // TODO: Typ/Art Filterung (Firma, Privat)
+
 export default {
   name: 'Anzeigen',
   props: {
@@ -134,6 +134,7 @@ export default {
         }
       }
     },
+    // Konvertiere ISO Datum zu lesbarem Datum
     convert: function (value) {
       return  new Date(value).toLocaleString();
     },
@@ -142,6 +143,7 @@ export default {
       "addFavorit", "sortAnzeigenByDate"]),
     ...mapActions("benutzer", ["fetchUserInformationById"]),
 
+    // Fuege ueber store Favorit in der Datenbank hinzu
     async addFavoritToData(anz_id) {
       try {
         this.msg = await this.addFavorit(anz_id);
@@ -152,6 +154,8 @@ export default {
       }
 
     },
+
+    // Entferne Favorit ueber store aus Datenbank
     async removeFavoritFromData(id) {
       try {
         const responseFav = await AnzService.filterFavoritenByAnzIdAndBenId(id, this.getUser.id)
@@ -161,6 +165,8 @@ export default {
         console.log(error.response)
       }
     },
+
+    // Filtere Beschreibungen, Titel und Themen nach einem Wort
     async filterBySearchWord() {
       try {
         this.msg = await this.filterAnzeigenByWord(this.wordToSearch);

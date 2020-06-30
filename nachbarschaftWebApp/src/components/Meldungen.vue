@@ -53,6 +53,7 @@
                 return  new Date(value).toLocaleString();
             },
             ...mapActions("meldungen",["getAllMeldungen"]),
+
             getBenOrAnz_id(current) {
                 if (current.ben_id != null) {
                     return {
@@ -68,6 +69,8 @@
                     }
                 }
             },
+
+            // Loesche Meldung aus der Datenbank
             loeschenMeldungen(id) {
                 try {
                     MeldungenService.meldungLoeschen(id);

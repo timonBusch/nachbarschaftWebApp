@@ -128,22 +128,26 @@
         name: "Anzeige",
         methods: {
             ...mapActions('benutzer', ['fetchBewertungenByUserId', 'calcAverageStars']),
-
+            // Pruefe ob Meldung ausgefuellt wurde
             checkFormValidity() {
                 const valid = this.$refs.form.checkValidity()
                 this.nameState = valid
                 return valid
             },
+            // Loesche Inhalt aus Modal
             resetModal() {
                 this.name = ''
                 this.nameState = null
             },
+            // Call back sobald ok gedrueck wird
             handleOk(bvModalEvt) {
                 // Prevent modal from closing
                 bvModalEvt.preventDefault()
                 // Trigger submit handler
                 this.handleSubmit()
             },
+
+            // Schicke Meldung ueber store zum Server
             async handleSubmit() {
                 if (!this.checkFormValidity()) {
                     return

@@ -36,6 +36,7 @@ Vue.use(VueGeolocation)
 
 Vue.config.productionTip = false
 
+// Routen zu den verschiedenen Komponenten
 const router = new VueRouter({
   routes: [
     { path: '/', component: Anzeigen},

@@ -86,6 +86,9 @@
         },
         methods: {
             ...mapActions('login', ["login", "userLogin"]),
+
+            // Pruefe ob die alle noetigen Informationen eingegeben wurden und
+            // sende Authentifizierung an Server
             async loginUser() {
                 try {
                         this.cookie_wrong = false;

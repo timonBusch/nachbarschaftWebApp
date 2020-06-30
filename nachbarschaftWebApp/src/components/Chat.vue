@@ -60,6 +60,8 @@
             ...mapActions('benutzer', ["fetchUserInformationById"]),
             ...mapGetters('chat', ['getChatParticipantMessages', 'getSendMessages', 'getOwnMessages', 'getCompleteChatLog']),
             ...mapGetters('benutzer', ['getUser']),
+
+            // Sende Nachricht ueber store an Server
             async sendMessageToUser() {
                 try{
                     const message = {
@@ -81,6 +83,7 @@
 
             },
 
+            // Hole alle Nachrichten vom Server
             async fetchMessages() {
                 await this.fetchUserInformationById(this.partnerId)
                 await this.fetchReceivedMessages();
@@ -95,6 +98,7 @@
             convert: function (value) {
                 return  new Date(value).toLocaleString();
             },
+
             scrollToEnd: function () {
                 var container = this.$el.querySelector("#chat_log");
                 container.scrollTop = container.scrollHeight

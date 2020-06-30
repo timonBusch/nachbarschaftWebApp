@@ -139,6 +139,9 @@
             }
         },
         methods: {
+
+            // Registriere Benutzer und ueberpruefe ob
+            // alle notwendigen Eingaben getaetigt worden sind
             async signUp() {
                 try {
                     if (!this.form.username) throw 'username';

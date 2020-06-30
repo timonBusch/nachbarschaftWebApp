@@ -63,7 +63,7 @@
         name: "AddAnzeige",
         data() {
             return {
-                // Accept information to add a Anzeige
+                // Speichere Daten um eine neue Anzeige zu erstellen
                 titel: '',
                 beschreibung: '',
                 thema: '',
@@ -71,6 +71,7 @@
             }
         },
         methods: {
+            // Schicke Daten zum Server ueber vuex store
             async addAnzeigeToData() {
                 try {
                     const anzeigenInfo = {

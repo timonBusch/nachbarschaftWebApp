@@ -262,6 +262,8 @@
         },
 
         methods: {
+
+            // Modal Funktionen um ein Profil zu melden
             checkFormValidity() {
                 const valid = this.$refs.form.checkValidity()
                 this.nameState = valid
@@ -286,6 +288,8 @@
                     this.$bvModal.hide('modal-prevent-closing')
                 })
             },
+
+            // Schalte den editier Modus ein
             enableEditingMode: function () {
                 this.editingMode = !this.editingMode;
             },
@@ -295,6 +299,8 @@
             convert: function (value) {
                 return  new Date(value).toLocaleString();
             },
+
+            // Zeige Bewertungen auf Profil an
             async addBewertungToProfile() {
                 try {
                     const bewertungInfo = {
@@ -316,6 +322,8 @@
                     this.msg = error.response.data;
                 }
             },
+
+            // Lade Benutzer des Profils und die Bewertungen
             async loadUserAndBewertung() {
 
                 await this.fetchUserInformationById(this.id);
@@ -332,6 +340,7 @@
                 this.strasse = this.currentUser.strasse;
                 this.hausnummer = this.currentUser.hausnummer;
             },
+
             /**
              * Aktualisiere Benutzer Daten
              * @returns {Promise<void>}
