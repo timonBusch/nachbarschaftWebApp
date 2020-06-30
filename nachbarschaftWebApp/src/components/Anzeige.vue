@@ -52,18 +52,12 @@
                         <button @click="pushToAnzeige(getCurrentAnzeige.ben_id)" type="button" class="btn btn-primary">Vollständiges Profil</button>
                     </div>
                     <div class="col-10" >
+                        <h3 class="float-left"><span class="font-weight-bold">Thema:</span> {{this.getCurrentAnzeige.thema}} </h3>
                         <div v-if="this.isLoggedIn && this.getCurrentAnzeige.ben_id === this.user.id">
-                            <h3 class="float-left"><span class="font-weight-bold">Thema:</span> {{this.getCurrentAnzeige.thema}} </h3>
                                 <button @click="removeAnzeige(getCurrentAnzeige.id)" type="button" class="btn btn-primary btn-sm float-right">
                                     <i :class="this.x"></i>
                                 </button>
                         </div>
-                        <div v-if="this.isLoggedIn">
-                            <button @click="addFavoritToData" type="button" class="btn btn-primary btn-sm float-right mr-2">
-                                <i :class="this.heart"></i>
-                            </button>
-                        </div>
-
                     </div>
                 </div>
 
@@ -115,7 +109,8 @@
 <script>
 
     // TODO: Eigene Anzeige bearbeiten koennen ?
-    // TODO: Favoriten entfernen
+    // TODO: Anzeige löschen als Admin
+    // TODO: benutzersterne richtig anzeigen
     import {mapActions, mapGetters, mapState} from "vuex";
     import AnzService from "../services/AnzeigenService";
 
@@ -182,8 +177,8 @@
         computed: {
             ...mapGetters("anzeigen",["getCurrentAnzeige"]),
             ...mapGetters("benutzer", ["getUser"]),
-            ...mapGetters("login", ["isLoggedIn"]),
-            ...mapState('login', ['user'])
+            ...mapGetters("login", ["isLoggedIn", "isAdmin"]),
+            ...mapState('login', ['user']),
         },
 
         created() {

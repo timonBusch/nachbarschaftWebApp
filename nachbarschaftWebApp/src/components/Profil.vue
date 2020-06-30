@@ -232,7 +232,6 @@
 
 <script>
     // TODO: Wenn man von einem Fremden Profil auf das eigene geht wird es nicht neu geladen
-    // TODO: Eingenes Profil bearbeiten koennen
     import {mapActions, mapGetters, mapState} from 'vuex'
     import Axios from "axios";
     import BenutzerService from "../services/BenutzerService";

@@ -13,7 +13,7 @@
                              v-if="selected === 'Benutzer' && current.ben_id || selected === 'Alle' || selected === 'Anzeigen' && current.anz_id"
 
                         >
-                            <router-link class="text-decoration-none" :to="{ name: getBenOrAnz_id(current).route, params: { id: getBenOrAnz_id(current).routeId.toString() } }">
+                            <router-link @click="this.meldungLoeschen" class="text-decoration-none" :to="{ name: getBenOrAnz_id(current).route, params: { id: getBenOrAnz_id(current).routeId.toString() } }">
                                 <div class="card-header">
                                     <span> {{ convert(current.zeitpunkt)}} </span>
                                     <span class="float-right"> <strong> {{ getBenOrAnz_id(current).routeName }} </strong> </span>
@@ -32,7 +32,7 @@
         </div>
     </div>
 </template>
-
+<!-- TODO: MELDUNGEN LÖSCHEN -->
 <script>
     import {mapActions, mapGetters} from "vuex";
 
@@ -52,7 +52,7 @@
             convert: function (value) {
                 return  new Date(value).toLocaleString();
             },
-            ...mapActions("meldungen",["getAllMeldungen"]),
+            ...mapActions("meldungen",["getAllMeldungen", "meldungLoeschen"]),
             getBenOrAnz_id(current) {
                 if (current.ben_id != null) {
                     return {
@@ -74,6 +74,7 @@
         },
         created() {
             this.getAllMeldungen();
+            this.meldungLoeschen();
         }
     }
 </script>

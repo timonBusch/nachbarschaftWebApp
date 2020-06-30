@@ -28,8 +28,12 @@ const actions = {
      */
     async fetchAnzeigen({commit, rootState}) {
         const userId = rootState.login.user.id
-        const response = await Axios.get("http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/excludeUserFav?ben_id=" + userId);
-
+        let response = null;
+        if (userId != null) {
+            response = await Axios.get("http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/excludeUserFav?ben_id=" + userId);
+        } else {
+            response = await Axios.get("http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/all");
+        }
         commit('SET_ANZEIGEN', response.data);
     },
     async addAnzeige({rootState},anzeigeInfo) {
