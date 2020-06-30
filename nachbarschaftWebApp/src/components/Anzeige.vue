@@ -54,9 +54,15 @@
                     <div class="col-10" >
                         <h3 class="float-left"><span class="font-weight-bold">Thema:</span> {{this.getCurrentAnzeige.thema}} </h3>
                         <div v-if="this.isAdmin || this.isLoggedIn && this.getCurrentAnzeige.ben_id === this.user.id">
-                                <button @click="removeAnzeige(getCurrentAnzeige.id)" type="button" class="btn btn-primary btn-sm float-right">
-                                    <i :class="this.x"></i>
-                                </button>
+
+                            <b-button v-b-modal.deleteModal
+                                      type="button" class="btn btn-primary btn-sm float-right">
+                                <i :class="this.x"></i>
+                            </b-button>
+
+                            <b-modal id="deleteModal">
+                                <p class="my-4">Sind Sie sicher, dass sie diese Anzeige löschen wollen?</p>
+                            </b-modal>
                         </div>
                     </div>
                 </div>

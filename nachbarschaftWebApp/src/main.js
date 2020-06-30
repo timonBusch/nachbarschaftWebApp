@@ -6,6 +6,8 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 
 import { BootstrapVue, BootstrapVueIcons} from 'bootstrap-vue'
+import VueGeolocation from "vue-browser-geolocation/src";
+import * as VueGoogleMaps from 'vue2-google-maps'
 import VueRouter from "vue-router";
 import Profil from "./components/Profil";
 import Anzeigen from "./components/Anzeigen";
@@ -17,12 +19,19 @@ import AddAnzeige from "./components/AddAnzeige";
 import Chat from "./components/Chat";
 import ChatOverview from "./components/ChatOverview";
 import Meldungen from "./components/Meldungen";
-//import Axios from "axios";
+import Map from "./components/Map";
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: ''
+  }
+})
 
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.use(VueRouter)
 Vue.use(require('vue-moment'));
+Vue.use(VueGeolocation)
 
 
 Vue.config.productionTip = false
@@ -70,12 +79,17 @@ const router = new VueRouter({
       path: '/nachrichten',
       name: 'nachrichten',
       component: ChatOverview
+    },
+    {
+      path: '/map',
+      name: 'map',
+      component: Map
     }
   ],
   mode: 'history'
 })
 
-//Axios.defaults.headers.common['Authorization'] = `Bearer ${store.state.token}`;
+
 
 
 new Vue({
