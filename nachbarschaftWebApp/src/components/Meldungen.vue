@@ -32,7 +32,6 @@
         </div>
     </div>
 </template>
-<!-- TODO: MELDUNGEN LÖSCHEN -->
 <script>
     import {mapActions, mapGetters} from "vuex";
     import MeldungenService from "../services/MeldungenService";

@@ -104,7 +104,6 @@
 <script>
   import {mapActions, mapGetters} from "vuex";
   import AnzService from "../services/AnzeigenService";
-  // TODO: Markierung für Favorit (in Anzeige versuchen)
   // TODO: Typ/Art Filterung (Firma, Privat)
 export default {
   name: 'Anzeigen',
