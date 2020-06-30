@@ -9,12 +9,12 @@
           <div class="input-group mb-3">
             <input v-model="wordToSearch" type="text" class="form-control" placeholder="Suche...">
             <div class="input-group-append">
-              <button @click="filterBySearchWord" class="btn btn-success" >Los</button>
+              <button @click="filterBySearchWord" class="btn btn-info" >Los</button>
             </div>
           </div>
         </div>
         <div class="col-3">
-          <button @click="this.sortAnzeigenByDate" type="button" class="btn btn-primary">
+          <button @click="this.sortAnzeigenByDate" type="button" class="btn btn-success">
             <i class="fa fa-calendar-day" ></i>
           </button>
         </div>
@@ -26,10 +26,10 @@
         <div class="col-6">
 
           <div class="btn-group btn-group-lg btn-block">
-            <button v-if="this.isLoggedIn" @click="this.filterAnzeigenEigene" type="button" class="btn btn-primary">Eigene</button>
-            <button v-if="this.isLoggedIn" @click="this.filterAnzeigenFavoriten" type="button" class="btn btn-primary">Favoriten</button>
-            <button v-if="this.isLoggedIn" @click="this.pushToMap" type="button" class="btn btn-primary">Karte</button>
-            <button @click="this.fetchAnzeigen" type="button" class="btn btn-primary">Alle</button>
+            <button v-if="this.isLoggedIn" @click="this.filterAnzeigenEigene" type="button" class="btn btn-success">Eigene</button>
+            <button v-if="this.isLoggedIn" @click="this.filterAnzeigenFavoriten" type="button" class="btn btn-success">Favoriten</button>
+            <button v-if="this.isLoggedIn" @click="this.pushToMap" type="button" class="btn btn-success">Karte</button>
+            <button @click="this.fetchAnzeigen" type="button" class="btn btn-success">Alle</button>
           </div>
 
         </div>
@@ -68,7 +68,7 @@
                           </button>
                           <button @click="addFavoritToData(post.id)"
                                   type="button" v-else-if="isLoggedIn && !(post.ben_id === getUser.id)"
-                                  class="btn-sm btn-primary float-right">
+                                  class="btn-sm btn-success float-right">
                             <i class="fa fa-heart"></i>
                           </button>
 

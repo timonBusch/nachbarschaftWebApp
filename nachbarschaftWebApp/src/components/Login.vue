@@ -55,7 +55,7 @@
 
                         </b-form-group>
 
-                        <b-button @click.prevent="loginUser()" variant="primary">Login</b-button>
+                        <b-button @click.prevent="loginUser()" variant="success">Login</b-button>
                     </b-form>
                 </div>
             </div>
