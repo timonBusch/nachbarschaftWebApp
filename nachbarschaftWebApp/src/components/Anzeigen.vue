@@ -4,9 +4,7 @@
 
       <!-- Top Bar in all Anzeigen -->
       <div class="row" style="margin-top: 20px">
-        <div class="col-3 form-group">
-          <b-form-select v-model="selected" :options="options"></b-form-select>
-        </div>
+        <div class="col-3"></div>
         <div class="col-6">
           <div class="input-group mb-3">
             <input v-model="wordToSearch" type="text" class="form-control" placeholder="Suche...">
@@ -15,7 +13,11 @@
             </div>
           </div>
         </div>
-        <div class="col-3"></div>
+        <div class="col-3">
+          <button @click="this.sortAnzeigenByDate" type="button" class="btn btn-primary">
+            <i class="fa fa-calendar-day" ></i>
+          </button>
+        </div>
       </div>
 
       <!-- Top Bar in all Anzeigen -->
@@ -26,7 +28,7 @@
           <div class="btn-group btn-group-lg btn-block">
             <button v-if="this.isLoggedIn" @click="this.filterAnzeigenEigene" type="button" class="btn btn-primary">Eigene</button>
             <button v-if="this.isLoggedIn" @click="this.filterAnzeigenFavoriten" type="button" class="btn btn-primary">Favoriten</button>
-            <button v-if="this.isLoggedIn" type="button" class="btn btn-primary">Karte</button>
+            <button v-if="this.isLoggedIn" @click="this.pushToMap" type="button" class="btn btn-primary">Karte</button>
             <button @click="this.fetchAnzeigen" type="button" class="btn btn-primary">Alle</button>
           </div>
 
@@ -65,7 +67,7 @@
                             <i class="fa fa-heart"></i>
                           </button>
                           <button @click="addFavoritToData(post.id)"
-                                  type="button" v-else-if="isLoggedIn"
+                                  type="button" v-else-if="isLoggedIn && !(post.ben_id === getUser.id)"
                                   class="btn-sm btn-primary float-right">
                             <i class="fa fa-heart"></i>
                           </button>
@@ -137,7 +139,7 @@ export default {
     },
     ...mapActions("anzeigen",["fetchAnzeigen", "filterAnzeigenEigene"
       , "filterAnzeigenFavoriten", "filterFavoritenByAnzId", "filterAnzeigenByWord",
-      "addFavorit"]),
+      "addFavorit", "sortAnzeigenByDate"]),
     ...mapActions("benutzer", ["fetchUserInformationById"]),
 
     async addFavoritToData(anz_id) {
@@ -166,12 +168,16 @@ export default {
         console.log(error.response.data)
       }
 
-    }
+    },
+    pushToMap() {
+      this.$router.push({path: '/map'});
+    },
 
   },
   computed: {
     ...mapGetters("anzeigen",["allAnzeigen", "getFavoritData"]),
-    ...mapGetters("login", ['getUser', 'isLoggedIn'])
+    ...mapGetters("login", ['getUser', 'isLoggedIn']),
+
   },
   created() {
     this.fetchAnzeigen();

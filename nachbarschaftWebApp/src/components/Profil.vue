@@ -317,21 +317,13 @@
                 }
             },
             async loadUserAndBewertung() {
-                //if(this.$route.params.id) {
-                    await this.fetchUserInformationById(this.id);
-                    await this.fetchBewertungenByUserId(this.getUser.id);
-                    this.currentUser = this.getUser;
-                    this.isLoggedInUserProfile = this.getUser.id === this.user.id;
-                    this.calcAverageStars();
-/*
-                }else {
-                    await this.fetchBewertungenByUserId(this.user.id);
-                    this.currentUser = this.user;
-                    this.isLoggedInUserProfile = true;
-                    this.calcAverageStars();
 
-                }
-                */
+                await this.fetchUserInformationById(this.id);
+                await this.fetchBewertungenByUserId(this.getUser.id);
+                this.currentUser = this.getUser;
+                this.isLoggedInUserProfile = this.getUser.id === this.user.id;
+                this.calcAverageStars();
+
                 this.benutzername = this.currentUser.benutzername;
                 this.vorname = this.currentUser.vorname;
                 this.nachname = this.currentUser.nachname;

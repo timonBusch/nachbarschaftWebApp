@@ -92,13 +92,14 @@
                         <div class="row">
                             <div class="col pt-5">
                                 <p class="font-weight-bold">PLZ:</p>
-                                <p>{{ this.getUser.plz }}</p>
+                                <p v-if="this.getUser.plz">{{ this.getUser.plz }}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col pt-5">
                                 <p class="font-weight-bold">Wohnort:</p>
-                                <p class="text-capitalize">{{ this.getUser.wohnort }}</p>
+                                <p v-if="this.getUser.wohnort" class="text-capitalize">{{ this.getUser.wohnort }}</p>
+                                <p v-else>Kein Wohnort angegeben</p>
                             </div>
                         </div>
                         <div class="row">

@@ -91,6 +91,12 @@ const actions = {
         commit('SET_CURRENT_ANZEIGE', response.data);
     },
 
+    /**
+     * Fuege einen Favoriten fuer den Benutzer hinzu
+     * @param rootState Zustand aus der dem Benutzer
+     * @param anz_id
+     * @returns {Promise<any>}
+     */
     async addFavorit ({rootState}, anz_id) {
         const ben_id = rootState.login.user.id
         const response = await Axios.post('http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/favorit/add?ben_id=' +
@@ -99,11 +105,33 @@ const actions = {
         return response.data;
     },
 
+    /**
+     * Anzeigen werden nach dem gesuchten Wort gefiltert
+     * @param commit
+     * @param word
+     * @returns {Promise<void>}
+     */
     async filterAnzeigenByWord({commit},word) {
         const response = await Axios.get(`http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/search?suche=${word}`)
 
         commit('SET_ANZEIGEN', response.data)
     },
+
+    async sortAnzeigenByDate({state, commit}) {
+
+        let toSort = state.anzeigen
+        for(let i = toSort.length; i > 1; i--) {
+            for(let y = 0; y < i-1; y++) {
+                if(toSort[y].datum > toSort[y+1].datum) {
+                    let first = toSort[y];
+                    toSort[y] = toSort[y + 1];
+                    toSort[y+1] = first;
+                }
+            }
+        }
+        commit('SET_ANZEIGEN', toSort);
+
+    }
 
 
 };
