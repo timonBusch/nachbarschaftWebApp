@@ -58,13 +58,8 @@
                                     <i :class="this.x"></i>
                                 </button>
                         </div>
-                        <div v-if="this.isLoggedIn && !isFavorit">
+                        <div v-if="this.isLoggedIn">
                             <button @click="addFavoritToData" type="button" class="btn btn-primary btn-sm float-right mr-2">
-                                <i :class="this.heart"></i>
-                            </button>
-                        </div>
-                        <div v-else-if="this.isLoggedIn && isFavorit">
-                            <button @click="addFavoritToData" type="button" class="btn btn-danger btn-sm float-right mr-2">
                                 <i :class="this.heart"></i>
                             </button>
                         </div>
@@ -170,19 +165,9 @@
             async fetchAnzeigenInformation() {
                 await this.filterAnzeigenById(this.id);
                 await this.fetchUserInformationById(this.getCurrentAnzeige.ben_id);
-                this.checkIsFavorite()
             },
             pushToAnzeige: function (id) {
                 this.$router.push({name: 'profil', params: {id}});
-            },
-            async addFavoritToData() {
-                try {
-                    this.msg = await this.addFavorit(this.getCurrentAnzeige.id);
-
-                }catch (error) {
-                    error.response.msg;
-                }
-
             },
             async removeAnzeige(id) {
                 try {
