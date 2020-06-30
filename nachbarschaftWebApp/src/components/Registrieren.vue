@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="card-body">
-                        <div v-if="this.form.username != null">
+                        <div v-if="this.testUsername" class="alert alert-danger">
                             Sie müssen einen Benutzernamen angeben.
                         </div>
                         <b-form-group
@@ -91,7 +91,7 @@
 </template>
 
 <script>
-    import AuthService from "../services/AuthService";
+    //import AuthService from "../services/AuthService";
     export default {
         name: "Registrieren",
         data() {
@@ -106,11 +106,22 @@
                     datenschutz: []
                 },
                 msg: '',
+                testUsername: false,
+                testEmail: false,
+                testPasswort: false,
+                testPasswordConf: false,
+                testPlz: false,
+                testDatenschutz: false,
             }
         },
         methods: {
             async signUp() {
+                if(this.form.testPasswort !== this.form.passwordConf) {
+                    this.testPasswordConf = true;
+                }
+                /*
                 try {
+
                     const credentials = {
                         username: this.form.username,
                         password: this.form.password,
@@ -125,6 +136,7 @@
                 }catch (error) {
                     this.msg = error.response.data;
                 }
+                */
             }
         }
     }

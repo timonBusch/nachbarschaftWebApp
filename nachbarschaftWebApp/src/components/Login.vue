@@ -7,12 +7,12 @@
                 </div>
                 <div class="card-body">
                     <b-form v-if="show">
-                        <div v-if="this.wrong || this.cookie_wrong || this.datenschutz_wrong" class="alert alert-danger">
+                        <div v-if="this.wrong || this.cookie_wrong " class="alert alert-danger">
                             <div v-if="this.wrong">
                                 <strong>E-Mail-Adresse oder Password falsch!</strong> Überprüfen Sie Ihre Eingaben.
                             </div>
-                            <div v-if="this.cookie_wrong || this.datenschutz_wrong">
-                                <strong>Cookie, Datenschutz und Nutzerbedingungen</strong> Sie müssen die Cookies zulassen und die Nutzungs- und Datenschutzbedinungn akzeptieren.
+                            <div v-if="this.cookie_wrong">
+                                <strong>Cookie</strong> Sie müssen die Cookies zulassen.
                             </div>
                         </div>
                         <b-form-group
@@ -82,7 +82,6 @@
                 msg: '',
                 wrong: false,
                 cookie_wrong: false,
-                datenschutz_wrong: false
             }
         },
         methods: {
@@ -90,7 +89,6 @@
             async loginUser() {
                 try {
                         this.cookie_wrong = false;
-                        this.datenschutz_wrong = false;
                         const credentials = {
                             username: this.form.email,
                             password: this.form.password
@@ -110,14 +108,12 @@
 
 
                         this.wrong = false;
-                        if(this.form.datenschutz.length !== 0 && this.form.cookies.length !== 0) {
+                        if(this.form.cookies.length !== 0) {
                             this.cookie_wrong = false;
-                            this.datenschutz_wrong = false;
                             this.userLogin(user);
                             this.$router.push('/')
                         } else {
                             this.cookie_wrong = true;
-                            this.datenschutz_wrong = true;
                         }
                 } catch (error) {
 
