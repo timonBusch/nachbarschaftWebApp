@@ -10,7 +10,7 @@
         <div class="list-group list-group-flush">
           <router-link to="/" class="list-group-item list-group-item-action bg-light">Startseite</router-link>
           <div v-if="this.isLoggedIn">
-            <router-link :to="{ name: 'profil', params: { id: this.getUser.id } }" class="list-group-item list-group-item-action bg-light">Profil</router-link>
+            <a href="" @click="pushToProfile()" class="list-group-item list-group-item-action bg-light">Profil</a>
             <router-link :to="{name: 'add'}" class="list-group-item list-group-item-action bg-light">Neue Anzeige</router-link>
             <router-link :to="{ name: 'nachrichten'}" class="list-group-item list-group-item-action bg-light">Nachrichten</router-link>
             <router-link v-if="this.isAdmin" :to="{ name: 'meldungen'}" class="list-group-item list-group-item-action bg-light">Meldungen</router-link>
@@ -78,6 +78,9 @@
         this.logout();
         this.$router.push('/')
       },
+      pushToProfile() {
+        this.$router.push({ name: 'profil', params: { id: this.user.id }})
+      }
     },
     computed: {
       ...mapState('login',['user']),

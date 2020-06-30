@@ -111,8 +111,6 @@
 </template>
 
 <script>
-
-    // TODO: Eigene Anzeige bearbeiten koennen ?
     import {mapActions, mapGetters, mapState} from "vuex";
     import AnzService from "../services/AnzeigenService";
 

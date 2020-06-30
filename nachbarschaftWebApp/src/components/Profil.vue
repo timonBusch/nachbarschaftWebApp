@@ -6,9 +6,6 @@
             <div class="card">
                 <div class="card-header">
                     <span class="card-title h2">Profil</span>
-                    <button v-if="isLoggedInUserProfile || this.isAdmin" @click="enableEditingMode" type="button" class="btn btn-primary float-right">
-                        <i class="fa fa-pen"></i>
-                    </button>
                     <!--<div v-if="!isLoggedInUserProfile">-->
                         <!-- Melden Button:-->
                         <b-button v-if="!isLoggedInUserProfile && !this.isAdmin" v-b-modal.modal-prevent-closing class="btn-danger btn-sm float-right">
@@ -53,6 +50,9 @@
                     </div>
                 </div>
                 <div class="col">
+                    <button v-if="isLoggedInUserProfile || this.isAdmin" @click="enableEditingMode" type="button" class="btn btn-primary float-right mt-1 mr-4">
+                        <i class="fa fa-pen"></i>
+                    </button>
                     <p>Bewertung:</p>
                     <div v-if="this.getAverageStars !== 0">
                         <div  v-for="n in this.getAverageStars" :key="n">
@@ -62,9 +62,9 @@
                     <div v-else>
                         <span>Keine Bewertungen vorhanden</span>
                     </div>
+
                 </div>
                 <div class="card-body">
-
                     <div class="container">
                         <div class="row">
                             <div class="col-6">
@@ -231,7 +231,6 @@
 </template>
 
 <script>
-    // TODO: Wenn man von einem Fremden Profil auf das eigene geht wird es nicht neu geladen
     import {mapActions, mapGetters, mapState} from 'vuex'
     import Axios from "axios";
     import BenutzerService from "../services/BenutzerService";
@@ -318,21 +317,21 @@
                 }
             },
             async loadUserAndBewertung() {
-                if(this.$route.params.id) {
+                //if(this.$route.params.id) {
                     await this.fetchUserInformationById(this.id);
                     await this.fetchBewertungenByUserId(this.getUser.id);
                     this.currentUser = this.getUser;
                     this.isLoggedInUserProfile = this.getUser.id === this.user.id;
                     this.calcAverageStars();
-
+/*
                 }else {
-
+                    await this.fetchBewertungenByUserId(this.user.id);
                     this.currentUser = this.user;
                     this.isLoggedInUserProfile = true;
-                    await this.fetchBewertungenByUserId(this.user.id);
                     this.calcAverageStars();
 
                 }
+                */
                 this.benutzername = this.currentUser.benutzername;
                 this.vorname = this.currentUser.vorname;
                 this.nachname = this.currentUser.nachname;
