@@ -6,12 +6,12 @@
             <div class="card">
                 <div class="card-header">
                     <span class="card-title h2">Profil</span>
-                    <button v-if="isLoggedInUserProfile || this.isAdmin()" @click="enableEditingMode" type="button" class="btn btn-primary float-right">
+                    <button v-if="isLoggedInUserProfile || this.isAdmin" @click="enableEditingMode" type="button" class="btn btn-primary float-right">
                         <i class="fa fa-pen"></i>
                     </button>
                     <!--<div v-if="!isLoggedInUserProfile">-->
                         <!-- Melden Button:-->
-                        <b-button v-if="!isLoggedInUserProfile && !this.isAdmin()" v-b-modal.modal-prevent-closing class="btn-danger btn-sm float-right">
+                        <b-button v-if="!isLoggedInUserProfile && !this.isAdmin" v-b-modal.modal-prevent-closing class="btn-danger btn-sm float-right">
                             <i :class="this.ex"></i>
                         </b-button>
 
@@ -55,7 +55,7 @@
                 <div class="col">
                     <p>Bewertung:</p>
                     <div v-if="this.getAverageStars !== 0">
-                        <div  v-for="n in this.getAverageStars()" :key="n">
+                        <div  v-for="n in this.getAverageStars" :key="n">
                             <span class="fa fa-star checked float-left"></span>
                         </div>
                     </div>
@@ -159,7 +159,7 @@
 
                         </div>
                         <div class="text-center">
-                            <button v-if="this.editingMode === true && isLoggedInUserProfile || this.isAdmin() && this.editingMode === true" @click="updateProfile"
+                            <button v-if="this.editingMode === true && isLoggedInUserProfile || this.isAdmin && this.editingMode === true" @click="updateProfile"
                                     type="button" class="btn btn-primary btn-lg mx-auto">Änderungen speichern</button>
                         </div>
 
@@ -171,7 +171,7 @@
 
         </div>
 
-        <div v-if="this.getBewertungen() && this.getBewertungen().length">
+        <div v-if="this.getBewertungen && this.getBewertungen.length">
 
             <div class="row mt-4 mb-4">
                 <div class="col"/>
@@ -180,7 +180,7 @@
                 </div>
                 <div class="col"/>
             </div>
-            <div class="row" v-for="bewertung of this.getBewertungen()" :key="bewertung.id">
+            <div class="row" v-for="bewertung of this.getBewertungen" :key="bewertung.id">
                 <div class="col"/>
                 <div class="col-6 mx-auto">
 
@@ -203,7 +203,7 @@
                 <div class="col"/>
             </div>
         </div>
-        <div v-if="this.isLoggedIn()">
+        <div v-if="this.isLoggedIn">
             <div v-if="!isLoggedInUserProfile" class="row mt-3">
                 <div class="col-6 mx-auto mb-4">
                     <div class="container-fluid">
@@ -292,8 +292,7 @@
             },
             ...mapActions('benutzer', ['fetchBewertungenByUserId', 'fetchUserInformationById', 'calcAverageStars']),
             ...mapActions('login', ['userLogin']),
-            ...mapGetters('benutzer', ['getBewertungen', 'getUser', 'getAverageStars']),
-            ...mapGetters('login', ['isLoggedIn', 'isAdmin']),
+
             convert: function (value) {
                 return  new Date(value).toLocaleString();
             },
@@ -303,7 +302,7 @@
                         kommentar: this.kommentar,
                         sterne: this.sterne,
                         bewerter_id: this.user.id,
-                        ben_id: this.getUser().id,
+                        ben_id: this.getUser.id,
                     };
 
                     const response = await Axios.post('http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/bewertung/add?ben_id='
@@ -321,9 +320,9 @@
             async loadUserAndBewertung() {
                 if(this.$route.params.id) {
                     await this.fetchUserInformationById(this.id);
-                    await this.fetchBewertungenByUserId(this.getUser().id);
-                    this.currentUser = this.getUser();
-                    this.isLoggedInUserProfile = this.getUser().id === this.user.id;
+                    await this.fetchBewertungenByUserId(this.getUser.id);
+                    this.currentUser = this.getUser;
+                    this.isLoggedInUserProfile = this.getUser.id === this.user.id;
                     this.calcAverageStars();
 
                 }else {
@@ -369,7 +368,7 @@
 
                         // Lade Benutzer mit geaenderten Daten
                         await this.fetchUserInformationById(this.user.id);
-                        this.userLogin(this.getUser());
+                        this.userLogin(this.getUser);
 
                         // Bearbeitung beenden
                         this.editingMode = false
@@ -380,7 +379,11 @@
 
             }
         },
-        computed: mapState('login',['user']),
+        computed: {
+            ...mapState('login',['user']),
+            ...mapGetters('benutzer', ['getBewertungen', 'getUser', 'getAverageStars']),
+            ...mapGetters('login', ['isLoggedIn', 'isAdmin']),
+        },
         created() {
             this.loadUserAndBewertung();
         },
