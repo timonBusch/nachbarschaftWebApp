@@ -122,7 +122,7 @@ const actions = {
         let toSort = state.anzeigen
         for(let i = toSort.length; i > 1; i--) {
             for(let y = 0; y < i-1; y++) {
-                if(toSort[y].datum > toSort[y+1].datum) {
+                if(toSort[y].datum < toSort[y+1].datum) {
                     let first = toSort[y];
                     toSort[y] = toSort[y + 1];
                     toSort[y+1] = first;
