@@ -25,17 +25,17 @@
       <div id="page-content-wrapper">
 
         <nav class="navbar navbar-expand-lg bg-light border-bottom">
-          <button class="btn btn-primary"  @click.prevent="toggleClass">Menü</button>
+          <button class="btn btn-success"  @click.prevent="toggleClass">Menü</button>
           <div class="container-fluid">
             <h1 >Nachbarschaftshilfe</h1>
 
             <div v-if="user.benutzername">
               <span class="mr-2">Willkommen {{ user.benutzername }}</span>
-              <button class="btn btn-primary" @click="logoutUser">Logout</button>
+              <button class="btn btn-success" @click="logoutUser">Logout</button>
             </div>
 
             <div v-else>
-              <button class="btn btn-primary" @click="$router.push({name: 'login'})">Login</button>
+              <button class="btn btn-success" @click="$router.push({name: 'login'})">Login</button>
             </div>
 
           </div>

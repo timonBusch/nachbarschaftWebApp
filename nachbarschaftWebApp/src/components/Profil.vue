@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <button v-if="isLoggedInUserProfile || this.isAdmin" @click="enableEditingMode" type="button" class="btn btn-primary float-right mt-1 mr-4">
+                    <button v-if="isLoggedInUserProfile || this.isAdmin" @click="enableEditingMode" type="button" class="btn btn-success float-right mt-1 mr-4">
                         <i class="fa fa-pen"></i>
                     </button>
                     <p>Bewertung:</p>
@@ -71,7 +71,7 @@
 
                                 <label>Benutzername:</label>
                                 <div class="input-group mb-3">
-                                    <div class="border border-primary rounded-lg w-100 p-2">
+                                    <div class="border border-success rounded-lg w-100 p-2">
                                         <div v-if="editingMode">
                                             <input v-model="benutzername" type="text" class="form-control border-0" placeholder="Benutzername...">
                                         </div>
@@ -83,7 +83,7 @@
 
                                 <label>Vorname:</label>
                                 <div class="input-group mb-3">
-                                    <div class="border border-primary rounded-lg w-100 p-2">
+                                    <div class="border border-success rounded-lg w-100 p-2">
                                         <div v-if="editingMode">
                                             <input v-model="vorname" type="text" class="form-control border-0" placeholder="Vorname...">
                                         </div>
@@ -95,7 +95,7 @@
 
                                 <label>Nachname:</label>
                                 <div class="input-group mb-3">
-                                    <div class="border border-primary rounded-lg w-100 p-2">
+                                    <div class="border border-success rounded-lg w-100 p-2">
                                         <div v-if="editingMode">
                                             <input v-model="nachname" type="text" class="form-control border-0" placeholder="Nachname...">
                                         </div>
@@ -109,7 +109,7 @@
                             <div class="col-6">
                                 <label>PLZ:</label>
                                 <div class="input-group mb-3">
-                                    <div class="border border-primary rounded-lg w-100 p-2">
+                                    <div class="border border-success rounded-lg w-100 p-2">
                                         <div v-if="editingMode">
                                             <input v-model="plz" type="text" class="form-control border-0" placeholder="PLZ...">
                                         </div>
@@ -121,7 +121,7 @@
 
                                 <label>Wohnort:</label>
                                 <div class="input-group mb-3">
-                                    <div class="border border-primary rounded-lg w-100 p-2">
+                                    <div class="border border-success rounded-lg w-100 p-2">
                                         <div v-if="editingMode">
                                             <input v-model="wohnort" type="text" class="form-control border-0" placeholder="Wohnort...">
                                         </div>
@@ -133,7 +133,7 @@
 
                                 <label>Straße:</label>
                                 <div class="input-group mb-3">
-                                    <div class="border border-primary rounded-lg w-100 p-2">
+                                    <div class="border border-success rounded-lg w-100 p-2">
                                         <div v-if="editingMode">
                                             <input v-model="strasse" type="text" class="form-control border-0" placeholder="Straße...">
                                         </div>
@@ -145,7 +145,7 @@
 
                                 <label>Hausnummer:</label>
                                 <div class="input-group mb-3">
-                                    <div class="border border-primary rounded-lg w-100 p-2">
+                                    <div class="border border-success rounded-lg w-100 p-2">
                                         <div v-if="editingMode">
                                             <input v-model="hausnummer" type="text" class="form-control border-0" placeholder="Hausnummer...">
                                         </div>
@@ -160,7 +160,7 @@
                         </div>
                         <div class="text-center">
                             <button v-if="this.editingMode === true && isLoggedInUserProfile || this.isAdmin && this.editingMode === true" @click="updateProfile"
-                                    type="button" class="btn btn-primary btn-lg mx-auto">Änderungen speichern</button>
+                                    type="button" class="btn btn-success btn-lg mx-auto">Änderungen speichern</button>
                         </div>
 
                     </div>
@@ -210,7 +210,7 @@
                         <div class="input-group">
                             <input required v-model="kommentar" type="text" class="form-control" placeholder="Nachricht...">
                             <div class="input-group-append">
-                                <button @click="addBewertungToProfile" type="button" class="btn btn-primary">Senden</button>
+                                <button @click="addBewertungToProfile" type="button" class="btn btn-info">Senden</button>
                                 <select required v-model="sterne" class="custom-select">
                                     <option selected>Bewertung...</option>
                                     <option value="1">1</option>

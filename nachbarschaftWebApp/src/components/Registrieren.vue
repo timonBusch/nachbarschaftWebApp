@@ -100,7 +100,7 @@
                                     <a href="#">Datenschutzbestimmungen</a> und <a href="#">Nutzerbedingungen</a></b-form-checkbox>
                             </b-form-checkbox-group>
                         </b-form-group>
-                        <b-button @click.prevent="signUp()" variant="primary">Registrieren</b-button>
+                        <b-button @click.prevent="signUp()" variant="success">Registrieren</b-button>
                     </b-form>
                 </div>
 

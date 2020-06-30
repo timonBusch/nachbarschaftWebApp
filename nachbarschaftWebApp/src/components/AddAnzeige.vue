@@ -41,7 +41,7 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="col">
-                                    <button @click.prevent="addAnzeigeToData" class="btn btn-primary">Veröffentlichen</button>
+                                    <button @click.prevent="addAnzeigeToData" class="btn btn-success">Veröffentlichen</button>
                                 </div>
                             </div>
                         </form>
