@@ -4,17 +4,8 @@
 
       <!-- Top Bar in all Anzeigen -->
       <div class="row" style="margin-top: 20px">
-        <div class="col-3">
-
-          <div class="form-group">
-            <select class="form-control" >
-              <option>Alle</option>
-              <option>Privat</option>
-              <option>Firma</option>
-            </select>
-
-          </div>
-
+        <div class="col-3 form-group">
+          <b-form-select v-model="selected" :options="options"></b-form-select>
         </div>
         <div class="col-6">
           <div class="input-group mb-3">
@@ -48,7 +39,7 @@
 
         <div class="row" v-for="post of allAnzeigen" :key="post.id">
           <div class="col"></div>
-          <div class="col-8">
+          <div class="col-8" >
 
             <div class="jumbotron jumbotron-fluid anzeige-jumbotron">
               <div class="container-fluid">
@@ -67,13 +58,17 @@
                           <span class="badge badge-success">{{ convert(post.datum) }}</span>
                           <span class="badge badge-info ml-3">Thema: {{post.thema}}</span>
                           <span v-if="post.ben_id === getUser.id" class="fa fa-user ml-3"></span>
-                          <button @click="removeFavoritFromData(post.id)" type="button" v-if="post.isFavorit" class="btn-sm btn-danger float-right">
+                          <button @click="removeFavoritFromData(post.id)"
+                                  type="button"
+                                  v-if="post.isFavorit"
+                                  class="btn-sm btn-danger float-right">
                             <i class="fa fa-heart"></i>
                           </button>
-                          <button @click="addFavoritToData(post.id)" type="button" v-else-if="isLoggedIn" class="btn-sm btn-primary float-right">
+                          <button @click="addFavoritToData(post.id)"
+                                  type="button" v-else-if="isLoggedIn"
+                                  class="btn-sm btn-primary float-right">
                             <i class="fa fa-heart"></i>
                           </button>
-
 
                         </div>
                       </div>
@@ -114,15 +109,36 @@ export default {
     return {
       msg: '',
       wordToSearch: '',
+      selected: 'Alle',
+      options: [
+        { value: 'Alle', text: 'Alle'},
+        { value: 'privat', text: 'Privat'},
+        { value: 'gewerblich', text: 'Firma'}
+      ]
     }
   },
   methods: {
+    getPrivatOrFirma(currentAnz) {
+      let art = this.fetchUserInformationById(currentAnz.ben_id);
+      if (art.art === 'privat') {
+        return {
+          anzArtBen: 'privat',
+          anzArtName: 'Privat'
+        }
+      } else if (art.art === 'firma') {
+        return {
+          anzArtBen: 'firma',
+          anzArtName: 'Firma'
+        }
+      }
+    },
     convert: function (value) {
       return  new Date(value).toLocaleString();
     },
     ...mapActions("anzeigen",["fetchAnzeigen", "filterAnzeigenEigene"
       , "filterAnzeigenFavoriten", "filterFavoritenByAnzId", "filterAnzeigenByWord",
       "addFavorit"]),
+    ...mapActions("benutzer", ["fetchUserInformationById"]),
 
     async addFavoritToData(anz_id) {
       try {

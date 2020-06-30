@@ -145,7 +145,6 @@
                 await this.filterAnzeigenById(this.id);
                 await this.fetchUserInformationById(this.getCurrentAnzeige.ben_id);
                 await this.fetchBewertungenByUserId(this.getCurrentAnzeige.ben_id);
-                console.log(this.getUser.id);
                 this.calcAverageStars();
             },
             pushToAnzeige: function (id) {
@@ -182,7 +181,6 @@
 
         created() {
             this.fetchAnzeigenInformation();
-            this.clac();
         },
 
     }
