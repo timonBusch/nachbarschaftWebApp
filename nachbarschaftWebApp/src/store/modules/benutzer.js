@@ -27,7 +27,6 @@ const actions = {
     async fetchBewertungenByUserId({commit}, id) {
         commit('CLEAR_BEWERTUNGEN')
         const response = await Axios.post(`http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/bewertung/ben_id?ben_id=${id}`);
-
         commit('SET_BEWERTUNGEN', response.data);
     },
     calcAverageStars({getters, commit}) {
@@ -38,13 +37,9 @@ const actions = {
                 sumStars += getters.getBewertungen[i].sterne;
             }
             average = Math.round((sumStars/getters.getBewertungen.length));
-
         }
         commit('SET_AVERAGE_STARS', average);
     },
-
-
-
 };
 
 // Changes state in vuex storage

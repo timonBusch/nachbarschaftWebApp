@@ -8,7 +8,7 @@
                     </div>
                     <div v-if="this.isLoggedIn && this.getCurrentAnzeige.ben_id !== this.user.id">
                         <!-- Melden Button:-->
-                        <b-button v-b-modal.modal-prevent-closing class="btn-danger btn-sm float-right mr-4">
+                        <b-button v-b-modal.modal-prevent-closing class="btn-danger btn-sm float-right mr-3">
                             <i :class="this.ex"></i>
                         </b-button>
 
@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-10" >
                         <h3 class="float-left"><span class="font-weight-bold">Thema:</span> {{this.getCurrentAnzeige.thema}} </h3>
-                        <div v-if="this.isLoggedIn && this.getCurrentAnzeige.ben_id === this.user.id">
+                        <div v-if="this.isAdmin || this.isLoggedIn && this.getCurrentAnzeige.ben_id === this.user.id">
                                 <button @click="removeAnzeige(getCurrentAnzeige.id)" type="button" class="btn btn-primary btn-sm float-right">
                                     <i :class="this.x"></i>
                                 </button>
@@ -66,11 +66,12 @@
                             <div class="col">
                                <span class="font-weight-bold">Benutzername:</span>
                                 <p>{{ this.getUser.benutzername }}</p>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
+                                <div v-if="this.getAverageStars !== 0">
+                                    <div  v-for="n in this.getAverageStars" :key="n">
+                                        <span class="fa fa-star checked float-left"></span>
+                                    </div>
+                                </div>
+                                <div v-else>Keine Bewertungen vorhanden</div>
                             </div>
                         </div>
                         <div class="row">
@@ -106,26 +107,13 @@
 <script>
 
     // TODO: Eigene Anzeige bearbeiten koennen ?
-    // TODO: Anzeige löschen als Admin
-    // TODO: benutzersterne richtig anzeigen
     import {mapActions, mapGetters, mapState} from "vuex";
     import AnzService from "../services/AnzeigenService";
 
     export default {
         name: "Anzeige",
-        props: ['id'],
-        data() {
-            return {
-                msg: '',
-                nameState: null,
-                text: "",
-                ex: "fa fa-exclamation",
-                heart: "fa fa-heart",
-                x: "fa fa-times",
-                isFavorit: '',
-            }
-        },
         methods: {
+            ...mapActions('benutzer', ['fetchBewertungenByUserId', 'calcAverageStars']),
 
             checkFormValidity() {
                 const valid = this.$refs.form.checkValidity()
@@ -152,11 +140,13 @@
                 })
             },
             ...mapActions("anzeigen", ["filterAnzeigenById", "addFavorit"]),
-            ...mapActions("benutzer", ["fetchUserInformationById"]),
-
+            ...mapActions("benutzer", ["fetchUserInformationById", "calcAverageStars"]),
             async fetchAnzeigenInformation() {
                 await this.filterAnzeigenById(this.id);
                 await this.fetchUserInformationById(this.getCurrentAnzeige.ben_id);
+                await this.fetchBewertungenByUserId(this.getCurrentAnzeige.ben_id);
+                console.log(this.getUser.id);
+                this.calcAverageStars();
             },
             pushToAnzeige: function (id) {
                 this.$router.push({name: 'profil', params: {id}});
@@ -171,16 +161,28 @@
                 }
             },
         },
+        props: ['id'],
+        data() {
+            return {
+                msg: '',
+                nameState: null,
+                text: "",
+                ex: "fa fa-exclamation",
+                heart: "fa fa-heart",
+                x: "fa fa-times",
+                isFavorit: '',
+            }
+        },
         computed: {
             ...mapGetters("anzeigen",["getCurrentAnzeige"]),
-            ...mapGetters("benutzer", ["getUser"]),
+            ...mapGetters("benutzer", ["getUser", 'getAverageStars']),
             ...mapGetters("login", ["isLoggedIn", "isAdmin"]),
             ...mapState('login', ['user']),
         },
 
         created() {
             this.fetchAnzeigenInformation();
-
+            this.clac();
         },
 
     }
