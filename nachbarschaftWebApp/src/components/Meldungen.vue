@@ -11,9 +11,9 @@
                         <div class="card"
                              style="margin-top: 10px"
                              v-if="selected === 'Benutzer' && current.ben_id || selected === 'Alle' || selected === 'Anzeigen' && current.anz_id"
-
+                             @click="loeschenMeldungen(current.id)"
                         >
-                            <router-link class="text-decoration-none" :to="{ name: getBenOrAnz_id(current).route, params: { id: getBenOrAnz_id(current).routeId.toString() } }">
+                            <router-link  class="text-decoration-none" :to="{ name: getBenOrAnz_id(current).route, params: { id: getBenOrAnz_id(current).routeId.toString() } }">
                                 <div class="card-header">
                                     <span> {{ convert(current.zeitpunkt)}} </span>
                                     <span class="float-right"> <strong> {{ getBenOrAnz_id(current).routeName }} </strong> </span>
@@ -35,6 +35,7 @@
 <!-- TODO: MELDUNGEN LÖSCHEN -->
 <script>
     import {mapActions, mapGetters} from "vuex";
+    import MeldungenService from "../services/MeldungenService";
 
     export default {
         name: "Meldungen",
@@ -66,6 +67,13 @@
                         routeId: current.anz_id,
                         routeName: 'Anzeige'
                     }
+                }
+            },
+            loeschenMeldungen(id) {
+                try {
+                    MeldungenService.meldungLoeschen(id);
+                } catch (error){
+                    console.log(error);
                 }
             }
         },
