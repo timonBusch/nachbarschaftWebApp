@@ -56,12 +56,21 @@
                         <div v-if="this.isAdmin || this.isLoggedIn && this.getCurrentAnzeige.ben_id === this.user.id">
 
                             <b-button v-b-modal.deleteModal
-                                      type="button" class="btn btn-primary btn-sm float-right">
+                                      type="button" class="btn-sm float-right" variant="danger">
                                 <i :class="this.x"></i>
                             </b-button>
 
-                            <b-modal id="deleteModal">
+                            <b-modal id="deleteModal" @ok="handleOkDeleteAnzeige">
                                 <p class="my-4">Sind Sie sicher, dass sie diese Anzeige löschen wollen?</p>
+                                <template v-slot:modal-footer="{ ok, cancel}">
+                                    <!-- Emulate built in modal footer ok and cancel button actions -->
+                                    <b-button size="sm" variant="danger" @click="ok()">
+                                        Löschen
+                                    </b-button>
+                                    <b-button size="sm" @click="cancel()">
+                                        Abbrechen
+                                    </b-button>
+                                </template>
                             </b-modal>
                         </div>
                     </div>
@@ -141,6 +150,17 @@
                 await AnzService.anzeigeMelden(this.id, this.text);
                 this.$nextTick(() => {
                     this.$bvModal.hide('modal-prevent-closing')
+                })
+            },
+            handleOkDeleteAnzeige(bvModalEvent) {
+                bvModalEvent.preventDefault();
+                this.handleSubmitDeleteAnzeige();
+
+            },
+            handleSubmitDeleteAnzeige() {
+                this.removeAnzeige(this.getCurrentAnzeige.id);
+                this.$nextTick(() => {
+                    this.$bvModal.hide('modal-prevent-closing');
                 })
             },
             ...mapActions("anzeigen", ["filterAnzeigenById", "addFavorit"]),
