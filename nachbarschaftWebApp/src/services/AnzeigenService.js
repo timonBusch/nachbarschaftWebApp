@@ -15,7 +15,7 @@ export default {
     async filterFavoritenByAnzIdAndBenId(anz_id, ben_id) {
         const response = await Axios.get('http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/favorit/anz_idAndBen_id?anz_id=' + anz_id
             +'&ben_id=' + ben_id);
-        console.log(response.data);
+        //if(response.data === string)
         return response.data;
     },
 

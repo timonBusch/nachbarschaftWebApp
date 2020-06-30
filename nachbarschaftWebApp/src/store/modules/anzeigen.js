@@ -6,6 +6,7 @@ import vue from 'vue';
 const state = {
    anzeigen: [],
    favoriten: [],
+   favoritData: [],
    currentAnzeige: ''
 };
 
@@ -13,6 +14,7 @@ const state = {
 const getters = {
    allAnzeigen: state => state.anzeigen,
    getCurrentAnzeige: state => state.currentAnzeige,
+   getFavoritData: state => state.favoritData,
 };
 
 // Actions that call mutation functions
@@ -21,10 +23,12 @@ const actions = {
     /**
      * Hole alle Anzeige und setzte sie in den Zustand anzeigen
      * @param commit
+     * @param rootState
      * @returns {Promise<void>}
      */
-    async fetchAnzeigen({commit}) {
-        const response = await Axios.get("http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/all");
+    async fetchAnzeigen({commit, rootState}) {
+        const userId = rootState.login.user.id
+        const response = await Axios.get("http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/excludeUserFav?ben_id=" + userId);
 
         commit('SET_ANZEIGEN', response.data);
     },
@@ -58,7 +62,7 @@ const actions = {
         const userId = rootState.login.user.id;
 
         const responseFav = await Axios.get(`http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/favorit/ben_id?ben_id=${userId}`);
-
+        commit('SET_FAVORIT_DATA', responseFav.data)
         commit('CLEAR_FAVORITEN');
        for (const fav of responseFav.data) {
            const responseR = await Axios.get(`http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/id?id=${fav.anz_id}`)
@@ -115,6 +119,8 @@ const mutations = {
     CLEAR_FAVORITEN: (state) => (state.favoriten = []),
 
     SET_CURRENT_ANZEIGE: (state, anzeige) => (state.currentAnzeige = anzeige),
+
+    SET_FAVORIT_DATA: (state, favoritenData) => (state.favoritData = favoritenData)
 
 
 };

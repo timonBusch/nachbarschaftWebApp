@@ -54,7 +54,7 @@
               <div class="container-fluid">
 
                 <div class="row">
-                  <div class="col-8 col-sm-8" >
+                  <div class="col" >
                     <h5><router-link :to="{ name: 'anzeige', params: {id: post.id.toString()}}">{{post.titel}}</router-link></h5>
                     <p>
                       {{post.beschreibung}}
@@ -67,6 +67,12 @@
                           <span class="badge badge-success">{{ convert(post.datum) }}</span>
                           <span class="badge badge-info ml-3">Thema: {{post.thema}}</span>
                           <span v-if="post.ben_id === getUser.id" class="fa fa-user ml-3"></span>
+                          <button @click="removeFavoritFromData(post.id)" type="button" v-if="post.isFavorit" class="btn-sm btn-danger float-right">
+                            <i class="fa fa-heart"></i>
+                          </button>
+                          <button @click="addFavoritToData(post.id)" type="button" v-else-if="isLoggedIn" class="btn-sm btn-primary float-right">
+                            <i class="fa fa-heart"></i>
+                          </button>
 
 
                         </div>
@@ -75,9 +81,7 @@
                     </div>
 
                   </div>
-                  <div class="col-4 col-sm-4">
-                    <img src="../assets/placeholder.jpg" class="img-thumbnail" alt="placeholder">
-                  </div>
+
                 </div>
 
               </div>
@@ -99,6 +103,7 @@
 
 <script>
   import {mapActions, mapGetters} from "vuex";
+  import AnzService from "../services/AnzeigenService";
   // TODO: Markierung für Favorit (in Anzeige versuchen)
   // TODO: Typ/Art Filterung (Firma, Privat)
 export default {
@@ -117,9 +122,31 @@ export default {
       return  new Date(value).toLocaleString();
     },
     ...mapActions("anzeigen",["fetchAnzeigen", "filterAnzeigenEigene"
-      , "filterAnzeigenFavoriten", "filterFavoritenByAnzId", "filterAnzeigenByWord"]),
+      , "filterAnzeigenFavoriten", "filterFavoritenByAnzId", "filterAnzeigenByWord",
+      "addFavorit"]),
 
+    async addFavoritToData(anz_id) {
+      try {
+        this.msg = await this.addFavorit(anz_id);
+        this.fetchAnzeigen();
 
+      }catch (error) {
+        error.response.msg;
+      }
+
+    },
+    async removeFavoritFromData(id) {
+      try {
+        console.log(id, this.getUser().id)
+        const responseFav = await AnzService.filterFavoritenByAnzIdAndBenId(id, this.getUser().id)
+        console.log(responseFav)
+        this.msg = await AnzService.deleteFavorit(responseFav.id);
+        this.filterAnzeigenFavoriten();
+      }catch (error) {
+        console.log("error")
+        console.log(error.response.data)
+      }
+    },
     async filterBySearchWord() {
       try {
         this.msg = await this.filterAnzeigenByWord(this.wordToSearch);
@@ -131,7 +158,7 @@ export default {
 
   },
   computed: {
-    ...mapGetters("anzeigen",["allAnzeigen"]),
+    ...mapGetters("anzeigen",["allAnzeigen", "getFavoritData"]),
     ...mapGetters("login", ['getUser', 'isLoggedIn'])
   },
   created() {
