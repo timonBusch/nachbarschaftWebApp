@@ -137,21 +137,18 @@ export default {
     },
     async removeFavoritFromData(id) {
       try {
-        console.log(id, this.getUser().id)
-        const responseFav = await AnzService.filterFavoritenByAnzIdAndBenId(id, this.getUser().id)
-        console.log(responseFav)
+        const responseFav = await AnzService.filterFavoritenByAnzIdAndBenId(id, this.getUser.id)
         this.msg = await AnzService.deleteFavorit(responseFav.id);
         this.filterAnzeigenFavoriten();
       }catch (error) {
-        console.log("error")
-        console.log(error.response.data)
+        console.log(error.response)
       }
     },
     async filterBySearchWord() {
       try {
         this.msg = await this.filterAnzeigenByWord(this.wordToSearch);
       }catch (error) {
-        error.response.data
+        console.log(error.response.data)
       }
 
     }
