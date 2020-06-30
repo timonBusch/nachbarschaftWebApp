@@ -35,7 +35,7 @@ const router = new VueRouter({
       component: Meldungen,
     },
     {
-      path: '/profil/:id?',
+      path: '/profil/:id',
       name: 'profil',
       component: Profil,
       props: true,
