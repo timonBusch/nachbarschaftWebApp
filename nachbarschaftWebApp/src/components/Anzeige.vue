@@ -6,7 +6,7 @@
                     <div class="col pb-2">
                         <h3> {{ this.getCurrentAnzeige.titel }} </h3>
                     </div>
-                    <div v-if="this.isLoggedIn && this.getCurrentAnzeige.ben_id !== this.user.id">
+                    <div v-if="this.isLoggedIn() && this.getCurrentAnzeige.ben_id !== this.user.id">
                         <!-- Melden Button:-->
                         <b-button v-b-modal.modal-prevent-closing class="btn-danger btn-sm float-right mr-4">
                             <i :class="this.ex"></i>
@@ -53,14 +53,13 @@
                     </div>
                     <div class="col-10" >
                         <h3 class="float-left"><span class="font-weight-bold">Thema:</span> {{this.getCurrentAnzeige.thema}} </h3>
-                        <div v-if="this.isLoggedIn && this.getCurrentAnzeige.ben_id === this.user.id">
+                        <div v-if="this.isLoggedIn() && this.getCurrentAnzeige.ben_id === this.user.id">
                                 <button @click="removeAnzeige(getCurrentAnzeige.id)" type="button" class="btn btn-primary btn-sm float-right">
                                     <i :class="this.x"></i>
                                 </button>
                         </div>
                     </div>
                 </div>
-
                 <div class="row mx-2">
                     <div class="col-2">
                         <div class="row">
@@ -101,8 +100,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </template>
 
