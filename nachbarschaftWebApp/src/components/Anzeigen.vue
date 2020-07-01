@@ -89,6 +89,19 @@
         </div>
 
       </div>
+      <div v-else class="row">
+        <div class="col"/>
+
+        <div class="col-8">
+          <div class="container-fluid">
+            <p class="text-center mt-4">
+              Keine Anzeigen vorhanden
+            </p>
+          </div>
+
+        </div>
+        <div class="col"/>
+      </div>
 
 
     </div>

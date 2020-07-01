@@ -104,7 +104,7 @@
                         </div>
                         <div class="row">
                             <div class="col pt-5">
-                                <router-link :to="{ name: 'chat', params: {partnerId: getUser.id}}">
+                                <router-link v-if="isLoggedIn" :to="{ name: 'chat', params: {partnerId: getUser.id}}">
                                     <button type="button" class="btn btn-success btn-block"><i class="fa fa-comment"></i></button>
                                 </router-link>
                             </div>

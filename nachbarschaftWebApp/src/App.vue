@@ -27,7 +27,7 @@
         <nav class="navbar navbar-expand-lg bg-light border-bottom">
           <button class="btn btn-success"  @click.prevent="toggleClass">Menü</button>
           <div class="container-fluid">
-            <h1 >Nachbarschaftshilfe</h1>
+            <h1 >Nachbarkraft</h1>
 
             <div v-if="user.benutzername">
               <span class="mr-2">Willkommen {{ user.benutzername }}</span>
@@ -59,9 +59,6 @@
 </template>
 
 <script>
-  // TODO: Themen hinzufuegen, Datenschutz- und Nutzungsbedingungen
-  // TODO: Chat bei Profil nur dann anzeigen wenn man angemeldet ist
-  // TODO: Registrieren: Wohnort hinzufuegen
   import { mapState, mapActions, mapGetters } from 'vuex'
   export default {
     name: 'App',

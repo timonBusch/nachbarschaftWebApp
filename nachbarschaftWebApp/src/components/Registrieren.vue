@@ -112,7 +112,7 @@
                                 v-model="form.datenschutz"
                                 >
                                 <b-form-checkbox value="checked_in">Bitte Bestätigen Sie die
-                                    <a href="#">Datenschutzbestimmungen</a> und <a href="#">Nutzerbedingungen</a></b-form-checkbox>
+                                    <router-link :to="{name: 'nutzungsbedingungen'}" >Datenschutzbestimmungen und Nutzungsbedingungen</router-link></b-form-checkbox>
                             </b-form-checkbox-group>
                         </b-form-group>
                         <b-button @click.prevent="signUp()" variant="success">Registrieren</b-button>

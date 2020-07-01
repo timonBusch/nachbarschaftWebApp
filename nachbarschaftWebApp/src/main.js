@@ -20,6 +20,7 @@ import Chat from "./components/Chat";
 import ChatOverview from "./components/ChatOverview";
 import Meldungen from "./components/Meldungen";
 import Map from "./components/Map";
+import Nutzungsbedingungen from "./components/Nutzungsbedingungen";
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -85,6 +86,11 @@ const router = new VueRouter({
       path: '/map',
       name: 'map',
       component: Map
+    },
+    {
+      path: '/nutzungsbedingungen',
+      name: 'nutzungsbedingungen',
+      component: Nutzungsbedingungen
     }
   ],
   mode: 'history'

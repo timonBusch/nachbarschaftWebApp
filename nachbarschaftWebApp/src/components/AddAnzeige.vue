@@ -22,11 +22,14 @@
                                     <div class="form-group">
                                         <div class="input-group mb-3">
                                             <select required v-model="thema" class="custom-select" id="inputGroupSelect02">
-                                                <option selected>Thema...</option>
+                                                <option selected>{{thema}}</option>
                                                 <option>Garten</option>
-                                                <option>Sozialleben</option>
-                                                <option>Spendenaufruf</option>
                                                 <option>Haushalt</option>
+                                                <option>Einkaufen</option>
+                                                <option>Auto</option>
+                                                <option>Computer</option>
+                                                <option>Arbeiten am Haus</option>
+                                                <option>Taxi</option>
                                                 <option>Sonstiges</option>
                                             </select>
                                         </div>
@@ -66,7 +69,7 @@
                 // Speichere Daten um eine neue Anzeige zu erstellen
                 titel: '',
                 beschreibung: '',
-                thema: '',
+                thema: 'Thema...',
                 msg: '',
             }
         },
