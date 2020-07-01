@@ -1,4 +1,4 @@
-# hello-world
+# Nachbarschaftshilfe
 
 ## Project setup
 ```
