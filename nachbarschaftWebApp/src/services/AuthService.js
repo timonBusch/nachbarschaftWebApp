@@ -11,7 +11,7 @@ export default {
     },
     signUp(credentails) {
         return axios.post(url + 'benutzer/add?benutzername=' + credentails.username + '&email=' + credentails.email + '&passwort=' + credentails.password + '&plz=' + credentails.plz +
-            '&vorname=&nachname&strasse&hausnummer&wohnort&typ=standard&art=privat').then(response => {
+            '&vorname=&nachname&strasse&hausnummer&wohnort=' + credentails.wohnort + '&typ=standard&art=privat').then(response => {
             return response.data
         })
 

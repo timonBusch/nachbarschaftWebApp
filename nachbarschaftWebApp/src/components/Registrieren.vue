@@ -88,6 +88,21 @@
                                 required
                             ></b-form-input>
                         </b-form-group>
+                        <div v-if="this.wrongWohnort" class="alert alert-danger">
+                            Sie müssen einen Wohnort angeben.
+                        </div>
+                        <b-form-group
+                                id="input-group-wohnort"
+                                label="Wohnort"
+                                label-for="input-wohnort"
+                        >
+                            <b-form-input
+                                    id="input-wohnort"
+                                    v-model="form.wohnort"
+                                    type="text"
+                                    required
+                            ></b-form-input>
+                        </b-form-group>
                         <div v-if="this.wrongDatenschutz" class="alert alert-danger">
                             Sie müssen die Datenschutz- und Nutzerbedingungen akzeptieren.
                         </div>
@@ -124,6 +139,7 @@
                     email: '',
                     password: '',
                     passwordConf: '',
+                    wohnort: '',
                     plz: '',
                     datenschutz: []
                 },
@@ -134,6 +150,7 @@
                 wrongEmailUsed: false,
                 wrongPassword: false,
                 wrongPasswordConf: false,
+                wrongWohnort: false,
                 wrongPlz: false,
                 wrongDatenschutz: false,
             }
@@ -159,6 +176,9 @@
                     if (this.form.passwordConf !== this.form.password) throw 'passwordConf';
                     this.wrongPasswordConf = false;
 
+                    if(!this.form.wohnort) throw 'wohnort';
+                    this.wrongWohnort = false;
+
                     if (!this.form.plz) throw 'plz';
                     this.wrongPlz = false;
 
@@ -169,6 +189,7 @@
                         username: this.form.username,
                         password: this.form.password,
                         email: this.form.email,
+                        wohnort: this.form.wohnort,
                         plz: this.form.plz
                     };
                     const response = await AuthService.signUp(credentials)
@@ -194,6 +215,9 @@
                             break;
                         case 'passwordConf':
                             this.wrongPasswordConf = true;
+                            break;
+                        case 'wohnort':
+                            this.wrongWohnort = true;
                             break;
                         case 'plz':
                             this.wrongPlz = true;
