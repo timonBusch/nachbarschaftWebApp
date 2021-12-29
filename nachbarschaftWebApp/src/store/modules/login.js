@@ -9,7 +9,7 @@ const state = {
 // Getter to return state variables
 const getters = {
     isLoggedIn: state => {
-        return state.token
+        return state.token = true
     },
     getUser: state => {
         return state.user;

@@ -65,8 +65,6 @@
 
 <script>
     import {mapActions} from "vuex";
-    import AuthService from "../services/AuthService";
-    import axios from "axios";
 
     export default {
         data() {
@@ -92,23 +90,21 @@
             async loginUser() {
                 try {
                         this.cookie_wrong = false;
-                        const credentials = {
-                            username: this.form.email,
-                            password: this.form.password
-                        };
 
-                        const response = await AuthService.login(credentials);
-
-                        this.msg = response.msg;
-
-                        const token = response.jwt;
-
-                        this.login(token);
-
-                        const user = await axios.get('http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/benutzer/email?email='
-                            + credentials.username)
-                            .then(response => response.data);
-
+                        let user = {
+                          "id": "1",
+                          "benutzername": "hjuerg",
+                          "vorname": "Hans",
+                          "nachname": "Jürgen",
+                          "strasse": "In der Strasse",
+                          "hausnummer": "1",
+                          "plz": "11332",
+                          "wohnort": "Demo",
+                          "email": "demo@demo.de",
+                          "passwort": "12345",
+                          "typ": "admin",
+                          "art": "demo"
+                        }
 
                         this.wrong = false;
                         if(this.form.cookies.length !== 0) {

@@ -18,11 +18,24 @@ const getters = {
 
 // Actions that call mutation functions
 const actions = {
-    async fetchUserInformationById({commit}, id) {
+    async fetchUserInformationById({commit}) {
         commit('CLEAR_USER');
-        const response = await Axios.get(`http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/benutzer/id?id=${id}`);
-
-        commit('SET_USER', response.data);
+        //const response = await Axios.get(`http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/benutzer/id?id=${id}`);
+        let demo = {
+            "id": "1",
+            "benutzername": "hjuerg",
+            "vorname": "Hans",
+            "nachname": "Jürgen",
+            "strasse": "In der Strasse",
+            "hausnummer": "1",
+            "plz": "11332",
+            "wohnort": "Demo",
+            "email": "demo@demo.de",
+            "passwort": "12345",
+            "typ": "demo",
+            "art": "demo"
+        }
+        commit('SET_USER', demo);
     },
     async fetchBewertungenByUserId({commit}, id) {
         commit('CLEAR_BEWERTUNGEN')

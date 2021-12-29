@@ -28,13 +28,36 @@ const actions = {
      */
     async fetchAnzeigen({commit, rootState}) {
         const userId = rootState.login.user.id
-        let response = null;
+        //let response = null;
         if (userId != null) {
-            response = await Axios.get("http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/excludeUserFav?ben_id=" + userId);
+            //response = await Axios.get("http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/excludeUserFav?ben_id=" + userId);
         } else {
-            response = await Axios.get("http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/all");
+            //response = await Axios.get("http://85.214.106.187:8080/nachbarschaftshilfe-0.0.1/anzeige/all");
         }
-        commit('SET_ANZEIGEN', response.data);
+        let demo = [
+            {
+                "id": "1",
+                "titel": "Suche nach Hilfe im Garten",
+                "thema": "Garten",
+                "beschreibung": "Ich benötige dringend Hilfe in meinem Garten",
+                "datum": "2017-06-15",
+            },
+            {
+                "id": "2",
+                "titel": "Fahrgemeinschaft",
+                "thema": "Auto",
+                "beschreibung": "Ich suche nach einer Fahrgemeinschaft wenn zur Universität fahre",
+                "datum": "2021-12-12",
+            },
+            {
+                "id": "3",
+                "titel": "Kasten Bier zum teilen",
+                "thema": "Gemeinschaft",
+                "beschreibung": "Ich habe einen Kasten Bier aber kann ihn nicht alleine trinken",
+                "datum": "2021-06-01",
+            }
+        ]
+        commit('SET_ANZEIGEN', demo);
     },
     async addAnzeige({rootState},anzeigeInfo) {
         const userId = rootState.login.user.id;
